@@ -1,0 +1,5 @@
+## To select data files only from Madgraph directory
+
+find ./effective_2b2tau/Events/ -maxdepth 2 -type f -name '*_gamma_v1.dat' -exec cp {} ./photon_files/effective_2b2tau/ \; 
+
+
