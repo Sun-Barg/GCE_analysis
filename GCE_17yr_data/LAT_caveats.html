@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" class="usa">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSSC: Fermi Data » Analysis » Caveats</title>
+
+
+
+<!-- USWDS CSS & JS -->
+<link rel="stylesheet" href="/scripts/hds_pages/assets/uswds/css/styles.css" />
+<script src="/scripts/hds_pages/assets/uswds/js/uswds-init.min.js"></script>
+
+<link rel="stylesheet" href="/inc/css/about_fermi_hds.css">
+<link rel="stylesheet" href="/inc/css/sub_template.css">
+<link rel="stylesheet" href="/inc/css/side-banner.css" />
+
+<!-- Google Analytics -->
+<script type="text/javascript" language="javascript" id="_fed_an_ua_tag"
+        src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA">
+</script>
+
+
+</head>
+
+<body>
+
+  <!------------ shared header ------------>
+  <!-- Skip nav and header navigation -->
+<a class="usa-skipnav" href="#main-content">Skip to main content</a>
+<div class="usa-overlay"></div>
+<header class="usa-header usa-header--extended border-top-1 border-secondary-dark bg-ink">
+    <div class="usa-navbar">
+        <div class="usa-logo">
+            <div class="grid-container padding-0">
+                <div class="grid-row">
+                    <div class="grid-col-auto display-none desktop:display-block">
+                        <a class="" href="https://www.nasa.gov">
+                            <img src="/inc/img/nasa-logo.svg" class="maxw-10" alt="NASA Logo, National Aeronautics and Space Administration">
+                        </a>
+                    </div>
+                    <div class="grid-col-fill">
+                        <h6 class="margin-0 font-sans-2xs text-normal display-none desktop:display-block">
+                            <a href="https://www.nasa.gov/"><span class="text-base-lightest">NASA | </span></a>
+                            <a href="https://www.nasa.gov/goddard/"><span class="text-base-lightest">GSFC | </span></a>
+                            <a href="https://science.gsfc.nasa.gov/"><span class="text-base-lightest">Sciences and Exploration</span></a>
+                        </h6>
+                        <h6 class="usa-logo__text font-sans-xl"><a href="/"><span
+class="text-base-lightest">Fermi</span></a></h6>
+                        <h6 class="margin-0 display-none desktop:display-block font-sans-2xs text-normal">
+                            <a href="/"><span class="text-base-lightest">Gamma-ray Space Telescope</span></a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="usa-menu-btn">Menu</button>
+    </div>
+    <nav aria-label="Primary navigation" class="usa-nav">
+        <div class="usa-nav__inner">
+            <button type="button" class="usa-nav__close">
+                <img src="/inc/assets/uswds/img/usa-icons/close.svg" role="img" alt="Close" />
+            </button>
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="heasarc-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-one">
+                        <span>About </span>
+                    </button>
+                    <ul id="extended-nav-section-one" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/overview.html"><span>Overview</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://imagine.gsfc.nasa.gov/observatories/learning/fermi/"><span>Educators</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://science.nasa.gov/mission/fermi/"><span>Public</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://svs.gsfc.nasa.gov/gallery/fermi5/"><span>Multimedia</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://science.nasa.gov/missions/fermi/explore-the-universe-with-the-first-e-book-from-nasas-fermi/"><span>Science E-Book</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/science/"><span>Research Highlights</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/cgi-bin/bibliography_fermi"><span>Publications</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/contacts.html"><span>Contacts</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="observatories-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-two">
+                        <span>Science Support</span>
+                    </button>
+                    <ul id="extended-nav-section-two" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item observatories-nav-child text-bold border-bottom-1 border-primary">
+                            <a href="/ssc/"><span>FSSC</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/proposals/"><span>Proposers</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/data/analysis/"><span>Tools & Software</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/data/"><span>Data & Products</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/new_to_fermi.html"><span>New Users</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/observations/multi/programs.html"><span>Multiwavelength Resources</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/multimessenger.html"><span>Time-domain Resources</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/help/about.html"><span>FSSC People</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/help/"><span>Helpdesk</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="archive-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-three">
+                        <span>Observatory</span>
+                    </button>
+                    <ul id="extended-nav-section-three" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/"><span>Overview</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/science/instruments/lat.html"><span>LAT</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/science/instruments/gbm.html"><span>GBM</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/timeline/posting/"><span>Timeline</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/types/allsky/"><span>Survey Modes</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/types/too/"><span>Targets of Opportunity</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="calibration-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-four">
+                        <span>News</span>
+                    </button>
+                    <ul id="extended-nav-section-four" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="https://science.nasa.gov/mission/fermi/stories/"><span>Press</span></a>
+
+                        </li>
+                        <li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="/ssc/news/"><span>Announcements</span></a>
+                        </li>
+						<li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="/ssc/mailing_lists.html"><span>News and Mailing Lists</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="software-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-five">
+                        <span>Community</span>
+                    </button>
+                    <ul id="extended-nav-section-five" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/"><span>Meetings and Workshops</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/#symposia-panel"><span>Symposia</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/summerschool/"><span>Summer School</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/ssc/users_group/"><span>Users Group</span></a>
+                        </li>
+                        <!--li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/ssc/observations/multi/programs.html"><span>Multiwavelength Coordination</span></a>
+                        </li-->
+                    </ul>
+                </li>
+
+
+            </ul>
+            <div class="usa-nav__secondary">
+                <ul class="usa-nav__secondary-links">
+                    <li class="usa-nav__secondary-item"><a href="/"><span>Fermi</span></a></li>
+                    <li class="usa-nav__secondary-item"><a href="/ssc/"><span>FSSC</span></a></li>
+                    <li class="usa-nav__secondary-item"><a href="http://heasarc.gsfc.nasa.gov/"><span>HEASARC</span></a></li>
+                </ul>
+                <section aria-label="Search component">
+                    <form class="usa-search usa-search--small" role="search" action="https://heasarc.gsfc.nasa.gov/cgi-bin/search/search.pl" method="post" id="HEASARCsearch" name="HEASARCsearch">
+                        <label class="usa-sr-only" for="search">Search</label>
+                        <input class="usa-input radius-left-md" id="search" type="search" name="tquery" />
+                        <button class="usa-button usa-button--secondary usa-button--hover" type="submit">
+                            <img src="/inc/assets/uswds/img/usa-icons-bg/search--white.svg" class="usa-search__submit-icon"
+                                alt="Search" />
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
+  <main class="usa-section" id="main-content">
+      
+<title>FSSC: Fermi Data » Analysis » Caveats</title>
+
+
+<!-- Start Section Wrapper -->
+<div id="sec-wrapper">
+<h1>Caveats About Analyzing LAT Pass 8 (P8R3_V3) Data</h1>
+<p>
+These caveats are relevant for the P8R3_V3 version of the Pass 8 photon dataset. They supersede the set of caveats for analysis of <a href="LAT_caveats_p8r3v2.html">the previous version of P8R3  </a> (P8R3_V2),
+<a href="LAT_caveats_p8r2.html">the initial version of Pass 8</a> (P8R2), <a href="LAT_caveats_p7rep.html">Pass 7 reprocessed</a> (P7REP), <a href="LAT_caveats_pass7.html">Pass7</a> (P7_V6) and <a href="LAT_caveats_pass6.html">Pass 6</a> (P6_V3 and P6_V11) event selections and Instrument Response Functions (IRFs).
+</p>
+<p>
+The LAT team is still working to validate all aspects of Pass 8 data and analysis. As a consequence it is expected that, in the coming years, the range of application of Pass 8 data will be increased, the tools and files will be improved and the systematic uncertainties will be decreased. These caveats will be modified accordingly.
+</p>
+<p>
+The P8R3_V3 <a href="/ssc/data/analysis/documentation/Cicerone/Cicerone_LAT_IRFs/IRF_overview.html">IRFs</a> are defined between 5.62 MeV and 3.16 TeV but that does not mean that they have been fully validated over this whole energy range. Following the <a href="http://arxiv.org/abs/1206.1896">Pass 7 validation effort</a>, the LAT team has started performing studies in order to check the consistency and precision of the instrument simulation and the instrument response representation provided by the IRFs. These studies are based on the analysis of Vela (<i>E</i> &lt; 10 GeV), bright AGN (3 GeV &lt; <i>E</i> &lt; 100 GeV) and the Earth limb (<i>E</i> &gt; 10 GeV). They include:
+</p>
+<div class="callout"><ul>
+<li>comparing the distributions of reconstructed quantities between data and the simulation of the instrument for a given selection (e.g. SOURCE class)</li>
+<li>comparing the fraction of events of a loose selection (e.g. TRANSIENT020 class) that are accepted in a more stringent selection (e.g. SOURCE class) in data and as predicted by the instrument simulation or the IRFs</li>
+<li>comparing the fraction of events in each event type for a given selection in data and as predicted by the instrument simulation or the IRFs</li>
+<li>comparing the radial profiles of a point source in data and as predicted by the IRFs</li>
+</ul></div>
+<p>
+The only difference between the previous IRFs (P8R3_V2)  and the new IRFs is that we used an in-flight calibration method to change the PSF event type effective areas (as a function of energy and incidence angle) in order to improve the agreement between the observed and predicted numbers of events. The calibration was performed using the Vela pulsar and the Earth limb data. The effective area change is within 20% and the resulting data/model agreement is within 5%.
+</p>
+<!--
+<h2>Event Selection</h2>
+<p>
+Prescriptions for event selection for analysis of Fermi-LAT data are provided in the <a href="/ssc/data/analysis/documentation/Cicerone/Cicerone_Data_Exploration/Data_preparation.html">data preparation</a> section of the Cicerone.
+</p>
+<p>
+The Fermi-LAT performance associated with the released P7REP IRFs is documented on the <a href="http://www-glast.slac.stanford.edu/software/IS/glast_lat_performance.htm">LAT Performance Page</a>. These IRFs were derived using Monte Carlo generated samples of photons between 18 MeV and 1.78 TeV, with overlays of periodic trigger events to realistically simulate the effects of residual signals from off-time or non-triggering particles. However, the validity of these IRFs when performing analysis of LAT data, in terms of usable event classes and energy range, is determined by the caveats discussed below.
+</p>
+
+<ul>
+	<li>
+	In doing cross-comparisons, the Fermi-LAT team found a small bias in the unbinned likelihood calculations compared to the binned analysis. Simulations have confirmed that the Test Statistic and flux values are overestimated by the unbinned analysis. The magnitude of the bias depends on the local conditions for the source, with sources having a low source-to-background ratio (e.g. in the Galactic plane) showing a larger effect, especially over long integrations. Although this bias has little effect on most results, a new version of the Fermitools has been developed to remove the inconsistency. This issue is solved in current Fermitools version (v9r31p1 or later).</li>
+	<li>The "P7REP_TRANSIENT" event class (bit 0 of EVENT_CLASS, evclass=0 in gtselect) has large non-photon backgrounds and is only appropriate for the study of short transient events with a duration of less than 200s. Beyond these timescales the level on non-photon backgrounds can compromise the quality of the data analysis.</li>
+	<li>We recommend using the "P7REP_SOURCE" (bit 2 of EVENT_CLASS, evclass=2 in gtselect) photons for all point source analyses as well as for the analysis of bright diffuse sources. When integrating over large regions of the sky, and particularly at high energies, the residual non-photon contamination in this event class may result in spurious spectral features, and so we recommend using only the "P7REP_CLEAN" (bit 3 of EVENT_CLASS, evclass=3 in gtselect) photons for studies of diffuse emission at these high energies.</li>
+	<li>Data below 100 MeV present challenges in spectral analysis because of the rapid change of effective area with energy, the residual uncertainty in the instrument response and the energy dispersion of the instrument, which is not treated by the Fermitools.  Therefore, when using the "P7SOURCE" and "P7CLEAN" selections we recommend starting at 100 MeV for the most robust results.  Inclusion of data outside the recommended energy range can result in the creation of spurious spectral features under the current IRFs.</li>	
+</ul>
+-->
+<h2>Energy Range</h2>
+<p>
+Either because the disagreement between data and the IRFs prediction is too large or because the validation process was hampered by lack of statistics, using data below 30 MeV or above 1 TeV is strongly discouraged.  The effect of energy dispersion is particularly large below 100 MeV where there is a non-negligible positive bias in the LAT energy reconstruction.  Therefore it is highly recommended to take into account energy dispersion (see the <a href="/ssc/data/analysis/documentation/Pass8_edisp_usage.html">Pass 8 analysis and energy dispersion</a> page) when analyzing data below 300 MeV, and required below 100 MeV.
+</p>
+<h2>Systematic Uncertainty on the Effective Area</h2>
+<p>
+The differences in selection efficiencies between data and the IRFs predictions can be translated into a systematic uncertainty band on the effective area. The uncertainty band brackets as a function of energy the minimum and maximum deviation of the effective area from its nominal value in the IRFs.  This uncertainty depends on energy but also on whether or not energy dispersion is taken into account: When using all events or individual event types, the agreement between data and IRF predictions is improved when taking into account energy dispersion.  For analyses requiring the smallest possible systematic uncertainties, the LAT team recommends enabling the energy dispersion correction.  Note that the Fermitools currently only support the energy dispersion correction for binned likelihood analysis. (See also the <a href="/ssc/data/analysis/documentation/Pass8_edisp_usage.html">Pass 8 analysis and energy dispersion</a> for the recommended practices regarding energy dispersion in Fermitools analysis.) </p></div>
+
+<p>
+The following plot shows the systematic uncertainty band of the effective area for two configurations:
+</p>
+<div class="callout"><ul>
+<li><strong>Red Curve:</strong> 
+Binned analysis with energy dispersion correction enabled.
+</li>
+<li><strong>Black Curve:</strong> 
+Unbinned or binned analysis with energy dispersion correction disabled, or using individual PSF or EDISP event types.
+</li>
+</ul></div>
+<p class="center">
+<img alt="Effective area systematic uncertainty" border="0" src="SystematicUncertaintyBand_P8R3_V3.png" width="500"/>
+</p>
+<h2>Systematic Uncertainty on the PSF</h2>
+<p>
+Systematics on the PSF are quantified in terms of the fractional uncertainty on the 68% containment radius (R<sub>68</sub>) of a point source.  The following statements summarize the current findings from PSF validation studies performed with Vela and stacked, high-latitude AGN:
+</p>
+<div class="callout"><ul>
+<li>Between 100 MeV and 10 GeV the systematic uncertainty on R<sub>68</sub> is  &lt; 5% when considering all events in a class as well as the individual event types (FRONT, BACK, PSF, and EDISP).  Outside of this energy range the systematic uncertainty on R<sub>68</sub> linearly increases as a function of log(<i>E</i>) to 10% at 30 MeV and 25% at 1 TeV.   Note that above 10 GeV the increase in systematic uncertainty is driven by the limited statistics in the AGN validation sample.</li>
+<li>In the P7REP data release, the PSF above 3 GeV was found to be slightly broader than predicted by MC simulations. To provide a more accurate representation of the PSF observed in flight data, the P7REP_V15 IRFs included an in-flight PSF that was derived to correct for this effect.  In Pass 8, improvement in the simulation of the instrument reduced this disagreement and validation studies performed with P8R3 data and the P8R3_V2 IRFs show no comparable discrepancy in the PSF at high energies.  The measured residuals in R<sub>68</sub> are consistent with a systematic uncertainty &lt; 5% and show no clear trend with energy.  Since no in-flight PSF correction was determined to be necessary, the PSF representation in the P8R3_V3 IRFs is derived entirely from MC simulations.</li>
+</ul></div>
+<p>
+The following plot shows the systematic uncertainty band for R<sub>68</sub> which applies to all event class and type selections:
+</p>
+<p class="center">
+<img alt="PSF systematic uncertainty" border="0" src="psfsystr68.png" width="500"/>
+</p>
+<h2>Other systematic effects and uncertainties</h2>
+<div class="callout"><ul>
+<li>The effective area tables are averaged over the azimuthal angle in the LAT instrument reference frame. For time scales of more than a few days this averaging is accurate to better than 1-2%. However, for shorter timescales it is important to use the <a href="/ssc/data/analysis/lat_irfs/irf_effective_area.html#PhiDependence">optional phi-dependent extensions to the livetime</a> when calculating exposures.</li>
+<li>Because the LAT field of view is very large, it is likely that somewhat different biases are relevant in different parts of the field of view. When coupled with the sky survey observational strategy of Fermi, this can cause apparent variability when studying particular sources. The magnitude of such effects depends on the timescale of the study. For example, the 3FGL catalog analysis found the pulsar Geminga to be variable at the 2% level on one-month time scales; an effect which is likely instrumental. Furthermore, dedicated variability studies have seen evidence of 10% variability on the 55-day time scale corresponding to the precession of the LAT orbital plane relative to the Earth's rotational axis. When doing precision variability and time-domain studies, the LAT team recommends using sources at similar declinations to control for these instrument-induced effects. (More information is available on the <a href="/ssc/data/analysis/LAT_caveats_temporal.html">LAT Temporal Caveats</a> page.)</li>
+<li>The absolute energy scale for the LAT is determined with an uncertainty of +2% -5% For additional details, see <a href="http://dx.doi.org/10.1016/j.astropartphys.2011.10.007">In-flight measurement of the absolute energy scale of the Fermi Large Area Telescope</a> (Ackermann, M. et al. 2011 APh, 35, 364).</li>
+<li>The LIVETIME column in the photon FITS file should be ignored. It was intended to contain the livetime accumulated since the start of the current run (data-taking interval, typically ∼1 orbit in duration), but this is not technically feasible. The livetime value resets frequently and this column should be ignored. The LIVETIME accumulations in the spacecraft data files are correct and complete.</li>
+<li>Data collected from the beginning of the mission to 2008-10-27 (MET 246823875) have a significantly higher level of background contamination at energies above ∼30 GeV.  On 2008-10-27 a change was introduced to the on-board configuration of the ACD timing parameters that fixed an inefficiency in the ACD trigger "Veto" signals.  Several ACD variables that are used in the Pass 8 event classification were affected by this inefficiency resulting in a lower background rejection power prior to the deployment of the new configuration.  For analyses using SOURCE class and focusing on energies &gt; 30 GeV it is recommended to exclude data prior to MET 246823875.</li>
+<li>A dedicated analysis searching for narrow spectral features (with width smaller than the LAT energy resolution of 5-10%) has been performed with Pass 8 data in different control regions including the Vela Pulsar, the Earth Limb, and 10x10 degree ROIs along the Galactic Plane.  Since no line-like spectral features are expected in these regions, any measured residuals can be attributed to systematic uncertainties in spectral modeling and/or unmodeled energy-dependent variations in the effective area.   Between 100 MeV and 100 GeV the measured spectral features in the Limb and Vela Pulsar have a fractional amplitude less than 2%.   We also note that a narrow feature at 133 GeV is observed in the Pass 8 Earth Limb data with a fractional size of ∼10%.  For ROIs with more than ∼5,000 events, these features can become very statistically significant (since statistical uncertainty is proportional to sqrt(<i>N</i>)). However we note that these features are expected to have little to no impact on typical broadband spectral analyses that use energy bins wider than the LAT energy resolution (e.g. 10 bins per decade).</li>
+<li>For transient sources observed at large incidence angles, the "Fisheye" effect can induce a measurable bias in the PSF. The Fermitools parameterize the PSF with a function that is azimuthally symmetric with respect to the true direction of the incident gamma ray and do not account for this effect.  The P8R3_V3 IRFs contain correction tables that can be used to estimate the PSF bias a function of energy and incidence angle.  More information regarding the Fisheye correction tables is provided in the <a href="/ssc/data/analysis/documentation/Cicerone/Cicerone_LAT_IRFs/IRF_PSF.html">PSF IRF page</a>.</li>
+</ul></div>
+<h2>Diffuse Models</h2>
+<div class="callout"><ul>
+<li>Please see the <a href="/ssc/data/access/lat/BackgroundModels.html">diffuse model page</a> to access the currently-recommended model of Galactic diffuse emission and the corresponding spectrum of the isotropic emission including residual background from cosmic rays misclassified as gamma rays.</li>
+<li>As explained in the <a href="/ssc/data/access/lat/BackgroundModels.html">diffuse model page</a>, the Pass 8 Galactic diffuse gamma-ray emission was produced by simply rescaling the P7REP Galactic diffuse model in order to correct for energy dispersion. As a consequence, all the caveats applying for the P7REP model also apply for the Pass 8 model. Documentation for the generation of the P7REP diffuse model is <a href="/ssc/data/access/lat/Model_details/FSSC_model_diffus_reprocessed_v12.pdf">provided here</a>.</li>
+<li>The model of Galactic diffuse gamma-ray emission is defined between 58.5 MeV and 513 GeV. To derive the isotropic spectrum at higher energies, we extrapolated the Galactic diffuse emission model. Analyses at energies &gt;100 GeV are likely to be limited primarily by photon statistics, but the accuracy of the modeling of diffuse gamma-ray emission at those high energies is also reduced.</li>
+<li>All the released diffuse models were derived for point sources and compact extended sources studies only, and are not suited for studies of extended sources and/or large-scale diffuse emissions. There is no standard background model for extended diffuse analyses, nor a generic treatment of extended sources and diffuse extended emissions. The approach for such studies depends on the aim and the objective of the study and should be evaluated, treated, and tested on a case-by-case basis.</li>
+<li>Each diffuse model should be used with the corresponding Event Selection and IRF. For example using P6 background models with P7 dataset or P7 background models with P6 dataset is strongly discouraged, because each model was fit to the specific Event Selection and IRF. Ideally the resulting diffuse emission model is independent of IRFs used to derive it, but in practice the model will have built into it the low-level systematics associated with our imperfect knowledge of the IRFs and the approximations that we make regarding neglecting the finite energy resolution. However, as the diffuse emission is bright over most regions of the sky, these small imperfections may result in large systematic effects for sources. For this reason we do not recommend using diffuse emission models for analyses with event classes for which their validity has not been tested and established. <br/>
+Furthermore, the templates for the isotropic spectrum include misclassified cosmic rays. The probability of such misclassifications differs between event classes as well as between event types. Therefore, it is important to use the isotropic template corresponding to the data selection. This applies both in terms of the event class and event type, i.e., if P8R3 front-converting events are selected, then the corresponding isotropic template for P8R3 front-converting events should be used. If both front-converting and back-converting events are selected then the combined template for front+back events is appropriate. We note that there was an anisotropic component in the P8R2 SOURCE class (most significant at 1-3 GeV within ∼20° of the Ecliptic/Equator compared to the poles). The additional cuts introduced by the P8R3 selection completely removed this anisotropy.</li>
+</ul></div>
+<h2>Earth Limb Emission</h2>
+<p>
+The residual emission from the Earth Limb is another diffuse component that contributes to the non-celestial background seen by the LAT.  Although the recommended zenith angle cuts remove the majority of the Limb photons, a lower intensity residual component remains from Earth Limb photons in the tail of the PSF that survive the zenith angle selection.  The residual Earth Limb emission has a very soft spectrum and is only relevant for analyses using data below 500 MeV.  The spatial distribution and amplitude of this component depends on both the time period that is analyzed and the data selection (e.g. FRONT versus BACK).  For long integration times (greater than a precession period) during standard survey-mode observations, the residual emission appears as two "caps" of radius ∼40° centered at the North and South celestial poles.  However during ToOs and other observation modes (for instance the modified observation strategy conducted during 2013-2014) the distribution of Earth Limb emission can be quite different.
+</p>
+<p>
+The recommended zenith angle selections for Pass 8 analysis (see the <a href="/ssc/data/analysis/documentation/Cicerone/Cicerone_Data_Exploration/Data_preparation.html">Data Preparation page</a> for the current recommendations) have been chosen to mitigate the impact of Earth Limb contamination for source analyses that use the recommended energy threshold of 100 MeV.  Although these selections do allow a measurable level of contamination from residual Earth Limb photons, it was found that this component was sufficiently small to avoid any potential bias on the measurement of source properties.  Source analyses that use data below 100 MeV or analyses of large-scale diffuse emission that include data below 300 MeV may need to consider more stringent zenith angle selections or the inclusion of a model component that accounts for the residual Earth Limb emission.
+</p>
+<h2>GRB and Solar flare analysis</h2>
+<div class="callout"><ul>
+<li>It is recommended to use the TRANSIENT020 class to maximize the statistics for spectral analysis of GRB prompt emission since it is more or less background free due to the short duration of the GRB prompt emission. When using the TRANSIENT020 class, it is recommended to not use data below 100 MeV for spectral analysis since the instrument response is not validated in the lower energy band.</li>
+<li>It is recommended to use the SOURCE class to search for GRB afterglows since the TRANSIENT020 class only adds lower energy photons, which may not help given the increased backgrounds.</li>
+<li>It is recommended to use data above 300 MeV to localize the GRB since low energy events suffers from the so called "Fish eye" effect where the reconstructed direction points toward smaller inclination angles due to selection bias. It is also recommended to use the SOURCE class for GRB localization since the TRANSIENT020 class does not improve statistics at the high energy band.</li>
+<li>The recommended isotropic model to be used with the TRANSIENT020 class is tabulated in the iso_P8R3_TRANSIENT020_V2_v06.txt file.</li>
+<li>It is recommended to use TRANSIENT015S class for the spectral analysis of impulsive Solar flares since it has been designed to minimize the sensitivity to pile-up that can occur during X-ray Solar flares. In this case, the recommended isotropic diffuse template is tabulated in the iso_P8R3_TRANSIENT015S_V2_v06.txt file.</li>
+<li>It is recommended to use SOURCE class for the spectral analysis of extended emission from Solar flares since the TRANSIENT15S class has a larger background contamination and it has been found that during the long lasting emission of Solar flares the rate of X-ray fluxes are lower and do not induce pile-up in the detector. </li>
+</ul></div>
+<h2 id="lle">LAT Low Energy (LLE) data product</h2>
+<p>
+The LAT Low Energy analysis (LLE) is a type of analysis developed by the Fermi-LAT and Fermi-GBM teams for increasing the effective area of the Large Area Telescope at low energy, and it is suitable for studying transient phenomena, such as Gamma-Ray Bursts and Solar Flares. The LLE analysis filters event data with a very loose event selection, requiring only minimal information, such as the existence of a reconstructed direction. The LLE analysis has been updated to the new Pass 8 event reconstruction and additional selection cuts have been added to reduce the contamination from cosmic-ray events. The reconstructed direction is used to select events that are compatible with a certain location in the sky, using information on the Point Spread Function to increase the signal-to-noise ratio. The instrument response is calculated with a dedicated Monte Carlo simulation that uses satellite pointing information and the celestial location of the source. The released FITS files contain the data (in various formats) and the instrument response.
+</p>
+<p>
+The LLE data is a data product that differs from the standard LAT data products, and goes with some caveats and considerations:
+</p>
+<div class="callout"><ul>
+<li>The LLE data selection and response depend on the input localization of the GRB. The default localization is taken from the <a href="http://heasarc.gsfc.nasa.gov/W3Browse/fermi/fermigtrig.html">Fermi GBM Trigger Catalog</a>. Although the procedure to obtain LLE data and response is fully automatic, the update of the GBM trigger catalog is not, and this might introduce latency in the delivery of the data products with the optimized location.</li>
+<li>The Monte Carlo used to generate the response covers an energy range between 10 MeV and 100 GeV. At low energy (&lt;100 MeV) the effect of the energy dispersion can be significant, and, with the current analysis, we discourage any spectral analysis below 30 MeV.</li>
+<li>Above a few hundred MeV (depending on the off axis angle of the event) the signal-to-noise ratio for standard data (TRANSIENT, SOURCE and cleaner event classes) is higher than for LLE data. In case of bright events with emission above a few hundred MeV we suggest using standard LAT event data at high energy and LLE data at low energy.</li>
+<li>The background in LLE is mainly driven by residual particle events and soft gamma-ray events in particular coming from the bright limb of the Earth. During Autonomous Repoint Requests (ARR), a significant fraction of the Earth Limb enters the LAT field of view and an increase of the event rate is clearly visible in LLE data. We urge users to exercise care in the treatment of the Earth Limb.</li>
+<li>Data and response are, by construction, related to each other. In case of updates, we recommend updating both the response and the data, making sure that the version number is the same.</li>
+</ul></div>
+<h2>LAT Monitored Source List</h2>
+<p>
+The flux estimates provided in the <a href="/ssc/data/access/lat/msl_lc/">LAT Monitored Source List</a> plots and tables do not include systematic uncertainties and reflect the recommended analysis and calibrations at the time the data were acquired. Therefore, use of these data as absolute flux measurements for constraining models or for comparison to other data is strongly discouraged. In addition to overall normalization uncertainties, source fluxes may have variations of up to 10%, particularly earlier in the mission, because of uncorrected dependencies of the gamma-ray detection efficiency on variations of the particle background over the orbit. See the caveats on variability studies mentioned above. Please note that these results have been produced using a variety of instrument response functions and calibrations.</p>
+
+<p>
+<a href="LAT_caveats_temporal.html">Periodicity artifacts in LAT time-series analysis</a>
+</p>
+
+<!-- End Section Wrapper -->
+
+
+  </main>
+
+  <!------------ shared footer ------------>
+  <footer class="usa-footer usa-footer--slim">
+	<div class="usa-footer__primary-section usa-dark-background bg-ink">
+		<div class="usa-footer__primary-container grid-row">
+			<div class="mobile-lg:grid-col">
+                                  
+<div class="text-center margin-top-2 text-base-lightest">
+  <span>Connect with us via </span>
+  <a class="usa-link" href="mailto:fermihelp@athena.gsfc.nasa.gov">email</a>
+
+  <!--a class="usa-link" href="mailto:fermihelp@athena.gsfc.nasa.gov">fermihelp@athena.gsfc.nasa.gov</a-->
+  <span> or </span>
+  <a class="usa-link" href="http://heasarc.gsfc.nasa.gov/cgi-bin/Feedback">webform</a>.
+</div>
+
+
+			</div>
+		</div>
+
+	</div>
+  <div class="usa-dark-background bg-ink padding-bottom-2">
+    <div class="grid-container padding-2 font-sans-2xs">
+      <div class="usa-footer__logo grid-row">
+        <div class="grid-col-2 display-none tablet:display-block">
+          <img class="width-12" src="/inc/img/nasa-logo.svg" alt="NASA logo" />
+        </div>
+        <div class="grid-col-12 desktop:grid-col-2">
+          <ul class="usa-list usa-list--unstyled">
+            <li><a class="usa-link--external" href="https://www.nasa.gov/about/">About NASA</a></li>
+            <li><a class="usa-link--external" href="https://www.nasa.gov/accessibility/">Accessibility</a></li>
+					  <li><a class="usa-link--external" href="https://www.nasa.gov/foia/">FOIA</a></li>
+          </ul>
+        </div>
+        <div class="grid-col-12 desktop:grid-col-3">
+          <ul class="usa-list usa-list--unstyled text-base-lightest">
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/odeo/no-fear-act/">No FEAR Act</a>
+            </li>
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/privacy/">Privacy Policy</a>
+            </li>
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/vulnerability-disclosure-policy/">Vulnerability Disclosure Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="grid-col-12 desktop:grid-col-1"></div>
+        <div class="grid-col-12 desktop:grid-col-4">
+          <ul class="usa-list usa-list--unstyled text-base-lightest">
+            <li>
+              Responsible Official: <a class="usa-link" href="mailto:ryan.smallcomb@nasa.gov">Elizabeth Hays</a>
+            </li>
+            <li>
+              Site Editor: <a class="usa-link" href="mailto:jd.myers@nasa.gov">J.D. Myers</a>
+            </li>
+            <li>
+              Last Updated: 29-Aug-2025
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-row text-base-lightest">
+        <div class="tablet:grid-col-2"></div>
+        <div class="tablet:grid-col-10">
+          A service of the
+          <a class="padding-x-05 usa-link--external" href="https://science.gsfc.nasa.gov/astrophysics">Astrophysics Science Division</a>
+          at <a class="padding-x-05 usa-link--external" href="https://www.nasa.gov/goddard/">NASA/GSFC</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/uswds/js/uswds.min.js"></script>
+<script src="/includes/js/xaminbox.js"></script>
+<script src="/includes/js/nav.js"></script>
+
+
+</body>
+</html>
+

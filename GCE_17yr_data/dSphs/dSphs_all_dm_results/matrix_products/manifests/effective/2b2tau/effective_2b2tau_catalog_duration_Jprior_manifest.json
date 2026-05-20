@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "key": "14yr_4fgl_dr3",
+      "label": "14yr + 4FGL-DR3",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_4fgl_gloabl_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    },
+    {
+      "key": "14yr_4fgl_dr4",
+      "label": "14yr + 4FGL-DR4",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_4fgl_dr4_14yr_global_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    },
+    {
+      "key": "14yr_5fgl",
+      "label": "14yr + FL16Y",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    },
+    {
+      "key": "17yr_4fgl_dr3",
+      "label": "17yr + 4FGL-DR3",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_4fgl_17yr_global_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    },
+    {
+      "key": "17yr_4fgl_dr4",
+      "label": "17yr + 4FGL-DR4",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_4fgl_dr4_17yr_global_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    },
+    {
+      "key": "17yr_5fgl",
+      "label": "17yr + FL16Y",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_17yr_global_batch/custom_spectra/effective_2b2tau/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt"
+    }
+  ],
+  "j_mode": "Jprior",
+  "outputs": {
+    "csv": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/effective_2b2tau_catalog_duration_matrix/combined/measured_30/Jprior/2b2tau/effective_2b2tau_catalog_duration_Jprior.csv",
+    "manifest": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/effective_2b2tau_catalog_duration_matrix/combined/measured_30/Jprior/2b2tau/effective_2b2tau_catalog_duration_Jprior_manifest.json",
+    "pdf": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/effective_2b2tau_catalog_duration_matrix/combined/measured_30/Jprior/2b2tau/effective_2b2tau_catalog_duration_Jprior.pdf",
+    "png": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/effective_2b2tau_catalog_duration_matrix/combined/measured_30/Jprior/2b2tau/effective_2b2tau_catalog_duration_Jprior.png"
+  },
+  "sample_label": "measured_30",
+  "spectrum": "effective_2b2tau"
+}

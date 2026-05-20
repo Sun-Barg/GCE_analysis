@@ -1,0 +1,39 @@
+{
+  "combo": "17yr_5fgl",
+  "combo_label": "17.5 yr + FL16Y",
+  "inputs": [
+    {
+      "final_state": "4b",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_17yr_global_batch/custom_spectra/onshell_4b_r0p2/combined/measured_30/Jprior/4b/generated_combined_limit_full.txt",
+      "spectrum": "onshell_4b_r0p2",
+      "support_max_mass_GeV": 1000.0,
+      "support_min_mass_GeV": 48.47
+    },
+    {
+      "final_state": "4tau",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_17yr_global_batch/custom_spectra/onshell_4tau_r0p2/combined/measured_30/Jprior/4tau/generated_combined_limit_full.txt",
+      "spectrum": "onshell_4tau_r0p2",
+      "support_max_mass_GeV": 1000.0,
+      "support_min_mass_GeV": 18.51
+    },
+    {
+      "final_state": "2b2tau",
+      "limit_file": "/home/sanghwan/FermiLAT/Fermi-LAT-dSphs/dSphs_analysis/Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_17yr_global_batch/custom_spectra/onshell_2b2tau_r0p2/combined/measured_30/Jprior/2b2tau/generated_combined_limit_full.txt",
+      "spectrum": "onshell_2b2tau_r0p2",
+      "support_max_mass_GeV": 1000.0,
+      "support_min_mass_GeV": 47.0
+    }
+  ],
+  "j_mode": "Jprior",
+  "max_mass_plotted_GeV": 1000.0,
+  "min_mass_plotted_GeV": 6.0,
+  "outputs": {
+    "csv": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_method_6combo_all_dm_results/fixed_17p5yr_FL16Y_by_r/onshell_sfdm_17yr_5fgl_r0p2_Jprior_final_state_comparison.csv",
+    "manifest": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_method_6combo_all_dm_results/fixed_17p5yr_FL16Y_by_r/onshell_sfdm_17yr_5fgl_r0p2_Jprior_final_state_comparison_manifest.json",
+    "pdf": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_method_6combo_all_dm_results/fixed_17p5yr_FL16Y_by_r/onshell_sfdm_17yr_5fgl_r0p2_Jprior_final_state_comparison.pdf",
+    "png": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_method_6combo_all_dm_results/fixed_17p5yr_FL16Y_by_r/onshell_sfdm_17yr_5fgl_r0p2_Jprior_final_state_comparison.png"
+  },
+  "r": "0.2",
+  "r_label": "r0p2",
+  "sample_label": "measured_30"
+}

@@ -1,0 +1,17 @@
+{
+  "channel": "bb",
+  "inputs_csv": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/combined_inputs.csv",
+  "j_mode": "Jprior",
+  "products": {
+    "comparison_csv": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/combined_dm_limit_vs_mauro.csv",
+    "generated_combined_ts": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/generated_combined_TS_array.npy",
+    "generated_limit_prefix": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/generated_combined_limit",
+    "limit_plot": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/combined_dm_limit_vs_mauro.png",
+    "mauro_combined_ts": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/mauro_combined_TS_array.npy",
+    "mauro_limit_prefix": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/mauro_combined_limit",
+    "summary_json": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/combined_dm_limit_vs_mauro_summary.json",
+    "ts_profile_plot": "Codex_files/codex_codes/dm_limit_diagnostics/baseline_5fgl_14yr_global_batch/combined/measured_30/Jprior/bb/combined_dm_ts_profiles_vs_mauro.png"
+  },
+  "sample_label": "measured_30",
+  "variant": "target_removed_catalog_table3_connected_minsep1_cluster1_catalogts"
+}

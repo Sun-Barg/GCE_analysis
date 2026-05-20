@@ -1,0 +1,4 @@
+case	state	r_value	mDM_GeV	sigmav95_cm3_s	best_sigmav_cm3_s	lr_at_limit	classification	recommended_use
+onshell_4tau_r0p8	4tau	0.8	1.2560000000e+01	nan	2.9934830911e+154	7.3280987454e-02	unconstrained_low_mass_one_point_4tau_endpoint	drop_endpoint_or_report_no_antiproton_bound_at_selected_scan_ceiling
+onshell_4tau_r0p9	4tau	0.9	1.0800000000e+01	nan	3.4662925139e-19	3.1494994810e+00	unconstrained_low_mass_one_point_4tau_endpoint	drop_endpoint_or_report_no_antiproton_bound_at_selected_scan_ceiling
+onshell_4tau_r1p0	4tau	1.0	1.3170000000e+01	nan	2.1789530410e-10	3.0273002025e+00	unconstrained_low_mass_one_point_4tau_endpoint	drop_endpoint_or_report_no_antiproton_bound_at_selected_scan_ceiling

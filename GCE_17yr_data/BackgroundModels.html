@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" class="usa">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSSC: Data : Data Access : LAT Background Models</title>
+  <!-- USWDS CSS -->
+<link rel="stylesheet" href="/assets/uswds/css/styles.css" />
+<!-- Optional project-specific CSS -->
+<link rel="stylesheet" href="/inc/css/about_fermi_hds.css">
+<link rel="stylesheet" href="/inc/css/sub_template.css">
+<!--link rel="stylesheet" href="/inc/css/sub_template_sps_boxes.css"-->
+<link rel="stylesheet" href="/inc/css/side-banner.css">
+<link rel="stylesheet" href="/inc/css/styles-heasarc.css" />
+<!--link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/uswds@2.13.3/dist/css/uswds.min.css" /-->
+<!-- Google Analytics -->
+<script type="text/javascript" language="javascript" id="_fed_an_ua_tag"
+        src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA">
+</script>
+
+<!-- USWDS JS -->
+<script src="/inc/assets/uswds/js/uswds-init.min.js"></script>
+<script defer src="/inc/assets/uswds/js/uswds.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uswds@2.13.3/dist/js/uswds.min.js"
+          defer></script>
+<!-- Custom JS -->
+<script defer src="/includes/js/xaminbox.js"></script>
+<script defer src="/includes/js/nav.js"></script>
+
+
+</head>
+
+
+
+<body>
+
+  <!------------ shared header ------------>
+  <!-- Skip nav and header navigation -->
+<a class="usa-skipnav" href="#main-content">Skip to main content</a>
+<div class="usa-overlay"></div>
+<header class="usa-header usa-header--extended border-top-1 border-secondary-dark bg-ink">
+    <div class="usa-navbar">
+        <div class="usa-logo">
+            <div class="grid-container padding-0">
+                <div class="grid-row">
+                    <div class="grid-col-auto display-none desktop:display-block">
+                        <a class="" href="https://www.nasa.gov">
+                            <img src="/inc/img/nasa-logo.svg" class="maxw-10" alt="NASA Logo, National Aeronautics and Space Administration">
+                        </a>
+                    </div>
+                    <div class="grid-col-fill">
+                        <h6 class="margin-0 font-sans-2xs text-normal display-none desktop:display-block">
+                            <a href="https://www.nasa.gov/"><span class="text-base-lightest">NASA | </span></a>
+                            <a href="https://www.nasa.gov/goddard/"><span class="text-base-lightest">GSFC | </span></a>
+                            <a href="https://science.gsfc.nasa.gov/"><span class="text-base-lightest">Sciences and Exploration</span></a>
+                        </h6>
+                        <h6 class="usa-logo__text font-sans-xl"><a href="/"><span
+class="text-base-lightest">Fermi</span></a></h6>
+                        <h6 class="margin-0 display-none desktop:display-block font-sans-2xs text-normal">
+                            <a href="/"><span class="text-base-lightest">Gamma-ray Space Telescope</span></a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="usa-menu-btn">Menu</button>
+    </div>
+    <nav aria-label="Primary navigation" class="usa-nav">
+        <div class="usa-nav__inner">
+            <button type="button" class="usa-nav__close">
+                <img src="/inc/assets/uswds/img/usa-icons/close.svg" role="img" alt="Close" />
+            </button>
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="heasarc-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-one">
+                        <span>About </span>
+                    </button>
+                    <ul id="extended-nav-section-one" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/overview.html"><span>Overview</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://imagine.gsfc.nasa.gov/observatories/learning/fermi/"><span>Educators</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://science.nasa.gov/mission/fermi/"><span>Public</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://svs.gsfc.nasa.gov/gallery/fermi5/"><span>Multimedia</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="https://science.nasa.gov/missions/fermi/explore-the-universe-with-the-first-e-book-from-nasas-fermi/"><span>Science E-Book</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/science/"><span>Research Highlights</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/cgi-bin/bibliography_fermi"><span>Publications</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item heasarc-nav-child">
+                            <a href="/contacts.html"><span>Contacts</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="observatories-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-two">
+                        <span>Science Support</span>
+                    </button>
+                    <ul id="extended-nav-section-two" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item observatories-nav-child text-bold border-bottom-1 border-primary">
+                            <a href="/ssc/"><span>FSSC</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/proposals/"><span>Proposers</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/data/analysis/"><span>Tools & Software</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/data/"><span>Data & Products</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/new_to_fermi.html"><span>New Users</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/observations/multi/programs.html"><span>Multiwavelength Resources</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/multimessenger.html"><span>Time-domain Resources</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/help/about.html"><span>FSSC People</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item observatories-nav-child">
+                            <a href="/ssc/help/"><span>Helpdesk</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="archive-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-three">
+                        <span>Observatory</span>
+                    </button>
+                    <ul id="extended-nav-section-three" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/"><span>Overview</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/science/instruments/lat.html"><span>LAT</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/science/instruments/gbm.html"><span>GBM</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/timeline/posting/"><span>Timeline</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/types/allsky/"><span>Survey Modes</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item archive-nav-child">
+                            <a href="/ssc/observations/types/too/"><span>Targets of Opportunity</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="calibration-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-four">
+                        <span>News</span>
+                    </button>
+                    <ul id="extended-nav-section-four" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="https://science.nasa.gov/mission/fermi/stories/"><span>Press</span></a>
+
+                        </li>
+                        <li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="/ssc/news/"><span>Announcements</span></a>
+                        </li>
+						<li class="usa-nav__submenu-item calibration-nav-child">
+                            <a href="/ssc/mailing_lists.html"><span>News and Mailing Lists</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="usa-nav__primary-item">
+                    <button type="button" id="software-nav" class="usa-accordion__button usa-nav__link" aria-expanded="false"
+                        aria-controls="extended-nav-section-five">
+                        <span>Community</span>
+                    </button>
+                    <ul id="extended-nav-section-five" class="usa-nav__submenu">
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/"><span>Meetings and Workshops</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/#symposia-panel"><span>Symposia</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/science/mtgs/summerschool/"><span>Summer School</span></a>
+                        </li>
+                        <li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/ssc/users_group/"><span>Users Group</span></a>
+                        </li>
+                        <!--li class="usa-nav__submenu-item software-nav-child">
+                            <a href="/ssc/observations/multi/programs.html"><span>Multiwavelength Coordination</span></a>
+                        </li-->
+                    </ul>
+                </li>
+
+
+            </ul>
+            <div class="usa-nav__secondary">
+                <ul class="usa-nav__secondary-links">
+                    <li class="usa-nav__secondary-item"><a href="/"><span>Fermi</span></a></li>
+                    <li class="usa-nav__secondary-item"><a href="/ssc/"><span>FSSC</span></a></li>
+                    <li class="usa-nav__secondary-item"><a href="http://heasarc.gsfc.nasa.gov/"><span>HEASARC</span></a></li>
+                </ul>
+                <section aria-label="Search component">
+                    <form class="usa-search usa-search--small" role="search" action="https://heasarc.gsfc.nasa.gov/cgi-bin/search/search.pl" method="post" id="HEASARCsearch" name="HEASARCsearch">
+                        <label class="usa-sr-only" for="search">Search</label>
+                        <input class="usa-input radius-left-md" id="search" type="search" name="tquery" />
+                        <button class="usa-button usa-button--secondary usa-button--hover" type="submit">
+                            <img src="/inc/assets/uswds/img/usa-icons-bg/search--white.svg" class="usa-search__submit-icon"
+                                alt="Search" />
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+  <div id="layout-container">
+   <!-- Sidebar -->
+   <!-- #include virtual="/inc/html/nav-data-access.html" -->
+
+  <main class="usa-section" id="main-content">
+      
+	<title>FSSC: Data : Data Access : LAT Background Models</title>
+
+
+
+<!-- Start Section Wrapper -->
+        <div id="sec-wrapper">
+
+
+
+          
+
+<h1>LAT Background Models</h1>
+
+<p>
+Many analyses of LAT data require models of Galactic diffuse and isotropic emission. Detailed discussion of how the latest Galactic diffuse emission model (available from this Web page) has been developed, and important caveats on its use, is available <a href="/ssc/data/analysis/software/aux/4fgl/Galactic_Diffuse_Emission_Model_for_the_4FGL_Catalog_Analysis.pdf"><b>here</b></a>. Please refer to the <a href="/ssc/data/analysis/scitools/binned_likelihood_tutorial.html">binned</a> or <a href="/ssc/data/analysis/scitools/likelihood_tutorial.html">unbinned</a> likelihood analysis tutorials for some examples of how to incorporate theses models into your own Fermi data analysis. Here is a list of IRFs and diffuse models to be used with the various data sets. We have provided the model files for you to download. 
+However, the files for the most recent data release are  included in the Fermitools installation (in the $FERMI_DIR/refdata/fermi/galdiffuse/ directory). As a result, it is unlikely that you will need to download each file separately.
+</p>
+<p>
+For Pass 8, each event class and event type combination has a dedicated IRF and isotropic model. Only a subset are shown here, as examples.
+</p>
+
+<div class="usa-prose">
+  <table class="usa-table" summary="LAT Background Models">
+    <thead>
+	<tr>
+		<th>Galactic interstellar<br>emission model</th>
+		<th>Event Selection/<br>IRF Name</th>
+		<th>Isotropic spectral template</th>
+	</tr>
+        </thead>
+    <tbody>
+        <tr>
+                <td rowspan="15"><a href="/ssc/data/analysis/software/aux/4fgl/gl
+l_iem_v07.fits">gll_iem_v07.fits</a><br>
+                (see below for P8R3 usage notes)</td>
+                <td>Pass 8 Source (front+back, allPSF, allEDISP)<br>P8R3_SOURCE_V3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_SOURCE_V3_v1.txt">iso_P8R3_SOURCE_V3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Source (front only)<br>P8R3_SOURCE_V3::FRONT</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_SOURCE
+_V3_FRONT_v1.txt">iso_P8R3_SOURCE_V3_FRONT_v1.txt</a></td>
+        </tr>
+
+        <tr>
+                <td>Pass 8 Source (back only)<br>P8R3_SOURCE_V3::BACK</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_SOURCE
+_V3_BACK_v1.txt">iso_P8R3_SOURCE_V3_BACK_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Clean (front+back, allPSF, allEDISP)<br>P8R3_CLEAN_V3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_CLEAN_V3_v1.txt">iso_P8R3_CLEAN_V3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Clean (PSF0)<br>P8R3_CLEAN_V3::PSF0</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_CLEAN_V3_PSF0_v1.txt">iso_P8R3_CLEAN_V3_PSF0_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Clean (PSF1)<br>P8R3_CLEAN_V3::PSF1</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_CLEAN_V3_PSF1_v1.txt">iso_P8R3_CLEAN_V3_PSF1_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Clean (PSF2)<br>P8R3_CLEAN_V3::PSF2</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_CLEAN_
+V3_PSF2_v1.txt">iso_P8R3_CLEAN_V3_PSF2_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Clean (PSF3)<br>P8R3_CLEAN_V3::PSF3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_CLEAN_
+V3_PSF3_v1.txt">iso_P8R3_CLEAN_V3_PSF3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultraclean (front+back, allPSF, allEDISP)<br>P8R3_ULTRACLEAN_V3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEAN_V3_v1.txt">iso_P8R3_ULTRACLEAN_V3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultraclean (EDISP0)<br>P8R3_ULTRACLEAN_V3::EDISP0</td>
+
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEAN_V3_EDISP0_v1.txt">iso_P8R3_ULTRACLEAN_V3_EDISP0_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultraclean (EDISP1)<br>P8R3_ULTRACLEAN_V3::EDISP1</td>
+
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEAN_V3_EDISP1_v1.txt">iso_P8R3_ULTRACLEAN_V3_EDISP1_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultraclean (EDISP2)<br>P8R3_ULTRACLEAN_V3::EDISP2</td>
+
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEAN_V3_EDISP2_v1.txt">iso_P8R3_ULTRACLEAN_V3_EDISP2_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultraclean (EDISP3)<br>P8R3_ULTRACLEAN_V3::EDISP3</td>
+
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEAN_V3_EDISP3_v1.txt">iso_P8R3_ULTRACLEAN_V3_EDISP3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Ultracleanveto (front+back, allPSF, allEDISP)<br>P8R3_ULTRACLEANVETO_V3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_ULTRACLEANVETO_V3_v1.txt">iso_P8R3_ULTRACLEANVETO_V3_v1.txt</a></td>
+        </tr>
+        <tr>
+                <td>Pass 8 Sourceveto (front+back, allPSF, allEDISP)<br>P8R3_SOURCEVETO_V3</td>
+                <td><a href="/ssc/data/analysis/software/aux/iso_P8R3_SOURCEVETO_V3_v1.txt">iso_P8R3_SOURCEVETO_V3_v1.txt</a></td>
+        </tr>
+
+	<tr>
+		<td rowspan="6"><a href="/ssc/data/analysis/software/aux/gll_iem_v05_rev1.fit">gll_iem_v05_rev1.fit</a><br>
+		(see below for usage notes)<br><br>
+		gll_iem_v05_rev1.fit (above) <br>
+		replaces the previous version,<br><a href="/ssc/data/analysis/software/aux/gll_iem_v05.fits">gll_iem_v05.fits</a><br>
+		(details below)</td>
+		<td>Pass 7 Reprocessed Source (front+back)<br>P7REP_SOURCE_V15</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_source_v05.txt">iso_source_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 Reprocessed Source (front only)<br>P7REP_SOURCE_V15::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_source_front_v05.txt">iso_source_front_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 Reprocessed Source (back only)<br>P7REP_SOURCE_V15::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_source_back_v05.txt">iso_source_back_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 Reprocessed Clean (front+back)<br>P7REP_CLEAN_V15</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_clean_v05.txt">iso_clean_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 Reprocessed Clean (front only)<br>P7REP_CLEAN_V15::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_clean_front_v05.txt">iso_clean_front_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 Reprocessed Clean (back only)<br>P7REP_CLEAN_V15::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_clean_back_v05.txt">iso_clean_back_v05.txt</a></td>
+	</tr>
+	<tr>
+		<td rowspan="6"><a href="/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits">gal_2yearp7v6_v0.fits</a> or<br>
+		<a href="/ssc/data/analysis/software/aux/gal_2yearp7v6_trim_v0.fits">gal_2yearp7v6_trim_v0.fits</a></td>
+		<td>Pass 7 (V6) Source (front+back)<br>P7SOURCE_V6</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_p7v6source.txt">iso_p7v6source.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 (V6) Source (front)<br>P7SOURCE_V6::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_p7v6source_front.txt">iso_p7v6source_front.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 (V6) Source (back)<br>P7SOURCE_V6::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_p7v6source_back.txt">iso_p7v6source_back.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 (V6) Clean (front+back)<br>P7CLEAN_V6</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_p7v6clean.txt">iso_p7v6clean.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 (V6) Clean (front)<br>P7CLEAN_V6::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_2yr_p7v6clean_front.txt">iso_2yr_p7v6clean_front.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 7 (V6) Clean (back)<br>P7CLEAN_V6::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/iso_2yr_p7v6clean_back.txt">iso_2yr_p7v6clean_back.txt</a></td>
+	</tr>
+	<tr>
+		<td rowspan="3"><a href="/ssc/data/analysis/software/aux/gll_iem_v02_P6_V11_DIFFUSE.fit">gll_iem_v02_P6_V11_DIFFUSE.fit</a></td>
+		<td>Pass 6 (V11) Diffuse (front+back)<br>P6_V11_DIFFUSE</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_v02_P6_V11_DIFFUSE.txt">isotropic_iem_v02_P6_V11_DIFFUSE.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 6 (V11) Diffuse (front only)<br>P6_V11_DIFFUSE::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_front_v02_P6_V11_DIFFUSE.txt">isotropic_iem_front_v02_P6_V11_DIFFUSE.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 6 (V11) Diffuse (back only)<br>P6_V11_DIFFUSE::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_back_v02_P6_V11_DIFFUSE.txt">isotropic_iem_back_v02_P6_V11_DIFFUSE.txt</a></td>
+	</tr>
+	<tr>
+		<td rowspan="4"><a href="/ssc/data/analysis/software/aux/gll_iem_v02.fit">gll_iem_v02.fit</a></td>
+		<td>Pass 6 (V3) Diffuse (front+back)<br>P6_V3_DIFFUSE</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_v02.txt">isotropic_iem_v02.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 6 (V3) Diffuse (front only)<br>P6_V3_DIFFUSE::FRONT</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_front_v02.txt">isotropic_iem_front_v02.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 6 (V3) Diffuse (back only)<br>P6_V3_DIFFUSE::BACK</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_back_v02.txt">isotropic_iem_back_v02.txt</a></td>
+	</tr>
+	<tr>
+		<td>Pass 6 (V3) DataClean (front+back)<br>P6_V3_DATACLEAN</td>
+		<td><a href="/ssc/data/analysis/software/aux/isotropic_iem_p6v3dataclean_v02.txt">isotropic_iem_p6v3dataclean_v02.txt</a></td>
+	</tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The Galactic Interstellar Emission Model</h2>
+
+<p>
+The Galactic model is a spatial and spectral template. The model for the Galactic diffuse emission was developed using spectral line surveys of HI and CO (as a tracer of H2)  to derive the distribution of interstellar gas in Galactocentric rings.  Infrared tracers of dust column density were used to correct column densities in directions where the optical depth of HI was either over or under-estimated.  The model of the diffuse gamma-ray emission was then constructed by fitting the gamma-ray emissivities of the rings in several energy bands to the LAT observations. The fitting also required a model of the inverse Compton emission calculated using  <a href="http://galprop.stanford.edu">GALPROP</a> and a model for the isotropic diffuse emission. Detailed discussion of how the latest Galactic diffuse emission models is available  <a href="/ssc/data/analysis/software/aux/4fgl/Galactic_Diffuse_Emission_Model_for_the_4FGL_Catalog_Analysis.pdf">here</a>. In particular, <a href="/ssc/data/analysis/software/aux/4fgl/Galactic_Diffuse_Emission_Model_for_the_4FGL_Catalog_Analysis.pdf">Section 5.2</a> has several caveats regarding the latest model.
+</p>
+	<p>Caveats related to the use of all the released diffuse models are available from the <a
+href="/ssc/data/analysis/LAT_caveats.html">LAT Caveats</a> page.</p>
+<p>
+<strong>PLEASE NOTE:</strong> The version of the Interstellar Emission Model for the analysis of Pass 8 data is <a href="/ssc/data/analysis/software/aux/4fgl/gll_iem_v07.fits">gll_iem_v07.fits</a>.
+This model is designed to be used for point source analysis, 
+but is
+ not appropriate for the investigation of medium or large scale diffuse structures within the LAT data.
+The interstellar emission model is a large file. For some computers this can produce memory-related issues when running tools that use this model, such as <b>gtlike</b>, <b>gtsrcprob</b>, <b>gtdiffrsp</b>, and <b>gtsrcmaps</b>.
+</p>
+
+<h2>Isotropic Spectral Templates</h2>
+
+<p>
+The LAT data contain a significant background contribution from
+extra-galactic diffuse gamma-rays, unresolved extra-galactic sources,
+and residual (misclassified) cosmic-ray emission.  This emission is
+isotropic in nature and should be included as an isotropic spectral
+template in most analysis.  The templates are derived from a fit to the
+all-sky emission excluding the Galactic plane (|b|&lt;10 deg excluded)
+and regions around the Celestial poles (|Dec|&gt;60 deg excluded).  This is
+to reduce contamination from the bright Galactic diffuse emission and
+emission from the Earth's limb.  The templates are derived in the energy
+range from 30 MeV to 1 TeV and then extrapolated as a power-law to 3
+TeV. The isotropic spectral template should be used with the same
+Galactic diffuse model, event class, and event type selection that were
+used to derive it. The full set of isotropic models are in the $(FERMI_DIR)/refdata/fermi/galdiffuse/ directory. The columns in each isotropic template are: the central energy (in MeV) for the band, the differential flux in that band (in ph/cm<sup>2</sup>/s/MeV/sr), and, if included, the 1-sigma uncertainty on the differential flux. 
+The uncertainty is not used for likelihood analysis by the Fermitools. Note that the isotropic spectral 
+templates are derived using the latest available catalog at the time of 
+release.  It therefore includes, at least partially, emission from 
+sources that may be resolved if a bigger dataset is used.
+</p>
+
+
+<h2>Updating your XML files</h2>
+
+<p>Both the isotropic and Galactic diffuse models are provided within the Fermitools release in the "$(FERMI_DIR)/refdata/fermi/galdiffuse/" directory. It is necessary for your XML model to properly represent the source name (as is used in the LAT events files) as well as the proper path and filename for the model files.</p>
+<p><strong>NOTE:</strong> It is important that you keep the "source name" tags consistent within your XML models. The Pass 8 data files have been delivered without the diffuse response columns having been populated. As a result, you will need to run the <strong>gtdiffrsp</strong> tool before performing any unbinned analysis method (such as <strong>gtfindsrc</strong> or <strong>gtsrcprob</strong>). If you change the "source name" in the XML file, the tool calculating the exposure will not be able to tell that <strong>gtdiffrsp</strong> has been run, and will recalculate the diffuse responses, significantly increasing your processing time.</p>
+<p>
+An example of the correct XML for these models is:
+</p>
+
+<pre class="bg-base-lightest border padding-2">
+&lt;source_library title="source library"&gt;
+
+&lt;source name="iso_P8R3_SOURCE_V3_v1" type="DiffuseSource"&gt;
+&lt;spectrum apply_edisp="false" file="$(FERMI_DIR)/refdata/fermi/galdiffuse/iso_P8R3_SOURCE_V3_v1.txt" type="FileFunction"&gt;
+&lt;parameter free="1" max="10" min="0.01" name="Normalization" scale="1" value="1" /&gt;
+&lt;/spectrum&gt;
+&lt;spatialModel type="ConstantValue"&gt;
+&lt;parameter free="0" max="10.0" min="0.0" name="Value" scale="1.0" value="1.0"/&gt;
+&lt;/spatialModel&gt;
+&lt;/source&gt;
+
+&lt;source name="gll_iem_v07" type="DiffuseSource"&gt;
+&lt;spectrum type="PowerLaw"&gt;
+&lt;parameter free="1" max="10.0" min="0.0" name="Prefactor" scale="1.0" value= "1.0"/&gt;
+&lt;parameter free="0" max="1" min="-1" name="Index" scale="1.0" value= "1.0"/&gt;
+&lt;parameter free="0" max="1e6" min="2e1" name="Scale" scale="1.0" value= "100"/&gt;
+&lt;/spectrum&gt;
+&lt;spatialModel file="$(FERMI_DIR)/refdata/fermi/galdiffuse/gll_iem_v07.fit" type="MapCubeFunction"&gt;
+&lt;parameter free="0" max="1000.0" min="0.001" name="Normalization" scale= "1.0" value="1.0"/&gt;
+&lt;/spatialModel&gt;
+&lt;/source&gt;
+
+&lt;/source_library&gt;
+</pre>
+
+<p>
+The easiest way to generate XML models that use the new diffuse models is to run the user contributed tool "make4FGLxml.py" (available <a href="/ssc/data/analysis/user/">here</a>). You will also need the current <a href="/ssc/data/access/lat/10yr_catalog/gll_psc_v24.fit">LAT catalog file</a>, and (optionally) the current <a href="/ssc/data/access/lat/10yr_catalog/LAT_extended_sources_8years.tgz">archive of extended sources</a>. A sample call that includes one extended source is:
+</p>
+
+<pre class="bg-base-lightest border padding-2" style="white-space: pre-wrap; word-break: break-word;">
+prompt&gt; make4FGLxml.py $(PATH_TO_CATALOG)/gll_psc_v24.fit $(PATH_TO_DATA_FILE)/data_filename.fits --outputxml model_filename.xml 
+--galfile $(FERMI_DIR)/refdata/fermi/galdiffuse/gll_iem_v07.fit --galname gll_iem_v07 
+--isofile $(FERMI_DIR)/refdata/fermi/galdiffuse/iso_P8R3_SOURCE_V3_v1.txt 
+--isoname iso_P8R3_SOURCE_V3_v1 --extDir $(FERMI_DIR)/data/pyBurstAnalysisGUI/templates
+This is make4FGLxml version 01.
+Creating file and adding sources from 4FGL
+Extended source CenA Lobes in ROI, make sure $(FERMI_DIR)/data/pyBurstAnalysisGUI/templates/CenALobes.fits is the correct path to the extended template.
+Added 311 point sources and 1 extended sources
+If using unbinned likelihood you will need to rerun gtdiffrsp for the extended sources or rerun the makeModel function with optional argument psForce=True
+</pre>
+
+
+<p>
+This tool has a number of options available to you. Review the usage notes for more information.
+</p>
+<p>
+REMINDER: Unlike previous data releases, for the initial Pass 8 data release the diffuse responses have <strong>not</strong> been pre-calculated. As a result, you will need to run the <strong>gtdiffrsp</strong> tool as part of any unbinned likelihood analysis.
+</p>
+
+
+<h3>Disabling Energy Dispersion</h3>
+
+<p>
+For certain data set, the user may chose to enable the handling of <a href="/ssc/data/analysis/documentation/Pass8_edisp_usage.html">energy dispersion effects</a> at low energies. In these cases, you will need to disable the energy dispersion correction for any model components that have already been corrected for energy dispersion or were fit to the data without taking energy dispersion into account. This is the case for the isotropic templates.
+</p>
+<p>
+The method for disabling energy dispersion handling for a specific source, is to add an attribute to the XML model for that source. This attribute, apply_edisp="false", should be included in the &lt;spectrum&gt; tag of the model for the source which should <strong>NOT</strong> have the energy dispersion corrections applied.
+</p>
+<p>
+An example of the correct XML for a source with energy dispersion handling disabled is:
+</p>
+
+<pre class="bg-base-lightest border padding-2">
+&lt;source name=&quot;iso_P8R3_SOURCE_V3_v1&quot; type=&quot;DiffuseSource&quot;&gt;
+    &lt;spectrum file=&quot;iso_P8R3_SOURCE_V3_v1.txt&quot; type=&quot;FileFunction&quot; apply_edisp="false"&gt;
+        &lt;parameter free=&quot;1&quot; max=&quot;10&quot; min=&quot;1e-2&quot; name=&quot;Normalization&quot; scale=&quot;1&quot; value=&quot;1&quot;/&gt;
+    &lt;/spectrum&gt;
+    &lt;spatialModel type=&quot;ConstantValue&quot;&gt;
+        &lt;parameter free=&quot;0&quot; max=&quot;10.0&quot; min=&quot;0.0&quot;name=&quot;Value&quot; scale=&quot;1.0&quot; value=&quot;1.0&quot;/&gt;
+    &lt;/spatialModel&gt;
+&lt;/source&gt;
+</pre>
+
+
+
+<h3>Including Extended Sources in your Model</h3>
+
+<p>
+Performing an integration over a spatial map requires a different technique than is used for point sources. As a result, you will need to include an attribute in the XML code for an extended source, telling the Fermitools to use the map-based integration method. This attribute, map_based_integral="true", should be included in the &lt;spatialModel&gt; tag of the model for the extended source.
+</p>
+<p>
+An example of the correct XML for an extended source model is:
+</p>
+
+<pre class="bg-base-lightest border padding-2">
+&lt;source_library title="source library"&gt;
+
+&lt;source name="W44" type="DiffuseSource"&gt;
+&lt;spectrum normPar="norm" type="LogParabola"&gt;
+&lt;parameter free="1" max="100000" min="1e-05" name="norm" scale="1e-11" value="2.891247798"/&gt;
+&lt;parameter free="1" max="5" min="0" name="alpha" scale="1" value="2.399924084"/&gt;
+&lt;parameter free="1" max="5" min="-1" name="beta" scale="1" value="0.2532196784"/&gt;
+&lt;parameter free="0" max="300000" min="20" name="Eb" scale="1" value="1737.352167"/&gt;
+&lt;/spectrum&gt;
+&lt;spatialModel file="$(FERMI_DIR)/data/pyBurstAnalysisGUI/templates/W44.fits" map_based_integral="true" type="SpatialMap"&gt;
+&lt;parameter free="0" max="1000" min="0.001" name="Prefactor" scale="1" value="1"/&gt;
+&lt;/spatialModel&gt;
+&lt;/source&gt;
+
+&lt;/source_library&gt;
+</pre>
+
+
+<h3>Using the Earth Limb Template</h3>
+
+<p>
+The <a href="/ssc/data/access/lat/4yr_catalog/">Third LAT catalog</a> required an additional all-sky component to account for emission from the earth limb that was not completely removed from the data at energies below 300 MeV. These are gamma-rays that are in the broad tails of the PSF and so pass the 100 degree zenith angle cut. The spatial template was derived from residuals in the 50&#8211;68 MeV energy range and assumed that the spatial shape is independent of energy. The very soft spectral template was derived by adding the limb template to the model. The template is specific to the 4-year data set because the residual earth limb emission depends on the orientation of the LAT.
+</p>
+<p>
+<strong>NOTE:</strong> For Pass 8 data analysis, the LAT team recommends using a 90&deg; zenith cut to remove Earth limb photons, rather than using the Limb template. This has also changed their recommendation for how to apply the zenith cut to your data. See the <a href="/ssc/data/analysis/documentation/Cicerone/Cicerone_Data_Exploration/Data_preparation.html">Data Preparation</a> section of the Cicerone for the latest recommendations.</p>
+<p>
+The Earth limb template is the only all-sky model component to use files for both the spatial and spectral models. In general, if you follow the zenith angle recommendations from the LAT team, you will not need to include the Earth Limb template in your analysis. <strong>This template is intended for use only for analysis of the 4-year Pass 7 reprocessed dataset used in the Third LAT catalog.</strong> To include the Earth limb in your analysis, download the model files from the <a href="/ssc/data/access/lat/4yr_catalog/">Third LAT catalog data products</a> page. Add the following source to your XML model, and ensure the path information to each model component is correct.
+</p>
+
+
+<pre class="bg-base-lightest border padding-2">
+&lt;source name="EarthLimb" type="DiffuseSource"&gt;
+&lt;spectrum file="$(PATH_TO_FILES)/limb_4years.txt" type="FileFunction"&gt;
+&lt;parameter free="1" max="1000" min="1e-05" name="Normalization" scale="1" value="1" /&gt;
+&lt;/spectrum&gt;
+&lt;spatialModel file="$(PATH_TO_FILES)/limb_4years.fits" type="SpatialMap"&gt;
+&lt;parameter free="0" max="1000.0" min="0.001" name="Normalization" scale= "1.0" value="1.0"/&gt;
+&lt;/spatialModel&gt;
+&lt;/source&gt;
+</pre>
+</div>
+
+<!-- End Section Wrapper -->
+
+
+
+  </main>
+  </div>
+  <!------------ shared footer ------------>
+  <footer class="usa-footer usa-footer--slim">
+	<div class="usa-footer__primary-section usa-dark-background bg-ink">
+		<div class="usa-footer__primary-container grid-row">
+			<div class="mobile-lg:grid-col">
+                                  
+<div class="text-center margin-top-2 text-base-lightest">
+  <span>Connect with us via </span>
+  <a class="usa-link" href="mailto:fermihelp@athena.gsfc.nasa.gov">email</a>
+
+  <!--a class="usa-link" href="mailto:fermihelp@athena.gsfc.nasa.gov">fermihelp@athena.gsfc.nasa.gov</a-->
+  <span> or </span>
+  <a class="usa-link" href="http://heasarc.gsfc.nasa.gov/cgi-bin/Feedback">webform</a>.
+</div>
+
+
+			</div>
+		</div>
+
+	</div>
+  <div class="usa-dark-background bg-ink padding-bottom-2">
+    <div class="grid-container padding-2 font-sans-2xs">
+      <div class="usa-footer__logo grid-row">
+        <div class="grid-col-2 display-none tablet:display-block">
+          <img class="width-12" src="/inc/img/nasa-logo.svg" alt="NASA logo" />
+        </div>
+        <div class="grid-col-12 desktop:grid-col-2">
+          <ul class="usa-list usa-list--unstyled">
+            <li><a class="usa-link--external" href="https://www.nasa.gov/about/">About NASA</a></li>
+            <li><a class="usa-link--external" href="https://www.nasa.gov/accessibility/">Accessibility</a></li>
+					  <li><a class="usa-link--external" href="https://www.nasa.gov/foia/">FOIA</a></li>
+          </ul>
+        </div>
+        <div class="grid-col-12 desktop:grid-col-3">
+          <ul class="usa-list usa-list--unstyled text-base-lightest">
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/odeo/no-fear-act/">No FEAR Act</a>
+            </li>
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/privacy/">Privacy Policy</a>
+            </li>
+            <li>
+              <a class="usa-link--external" href="https://www.nasa.gov/vulnerability-disclosure-policy/">Vulnerability Disclosure Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="grid-col-12 desktop:grid-col-1"></div>
+        <div class="grid-col-12 desktop:grid-col-4">
+          <ul class="usa-list usa-list--unstyled text-base-lightest">
+            <li>
+              Responsible Official: <a class="usa-link" href="mailto:ryan.smallcomb@nasa.gov">Elizabeth Hays</a>
+            </li>
+            <li>
+              Site Editor: <a class="usa-link" href="mailto:jd.myers@nasa.gov">J.D. Myers</a>
+            </li>
+            <li>
+              Last Updated:  8-Sep-2025
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-row text-base-lightest">
+        <div class="tablet:grid-col-2"></div>
+        <div class="tablet:grid-col-10">
+          A service of the
+          <a class="padding-x-05 usa-link--external" href="https://science.gsfc.nasa.gov/astrophysics">Astrophysics Science Division</a>
+          at <a class="padding-x-05 usa-link--external" href="https://www.nasa.gov/goddard/">NASA/GSFC</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/uswds/js/uswds.min.js"></script>
+<script src="/includes/js/xaminbox.js"></script>
+<script src="/includes/js/nav.js"></script>
+
+</body>
+</html>

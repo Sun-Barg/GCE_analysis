@@ -1,0 +1,37 @@
+{
+  "case": "onshell_4b_r0p5",
+  "grid": {
+    "manifest": "Codex_files/generated_outputs/onshell_30_pbar_limits_20260727/onshell_4b_r0p5/configs/manifest.txt",
+    "masses": [
+      19.57,
+      24.9,
+      34.33,
+      47.33,
+      65.25,
+      89.96,
+      124.02,
+      170.99,
+      235.73,
+      325.0,
+      448.07,
+      617.74,
+      851.67,
+      1000.0
+    ],
+    "rows": 140
+  },
+  "mass_mode": "baseline-plus-edges",
+  "overlay": {
+    "custom_mass_max_GeV": 1000.0,
+    "custom_mass_min_GeV": 19.57,
+    "custom_table_count": 99,
+    "overlay_pppc": "Codex_files/generated_outputs/onshell_30_pbar_limits_20260727/onshell_4b_r0p5/usine_overlay/inputs/PPPC4DMID-spectra/2019/AtProduction_antiprotons.dat",
+    "pppc_log10x": 179,
+    "pppc_masses": 62,
+    "replacement_column": "kCIRELLI19 b column used through bbbar branching slot",
+    "standard_pppc": "inputs/PPPC4DMID-spectra/2019/AtProduction_antiprotons.dat"
+  },
+  "r_value": "0.5",
+  "source_dir": "Prompt_spectra/custom_spectrum_tables/Spectra_Data_sfdm_4b_off/Spectra_Data_sfdm_4b_off_r0.5",
+  "state": "4b"
+}
