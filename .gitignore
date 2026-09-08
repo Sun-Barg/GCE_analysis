@@ -47,3 +47,9 @@ GCE_17yr_data/**/*.tsv
 *.tgz
 *.tar.gz
 *.zip
+
+# Prompt spectra 데이터 — MG5 파이프라인에서 재생성
+Prompt_spectra/Pythia_data/
+# 협력자 제공 자료 (별도 저장소 분리 예정)
+GCE_17yr_data/pbar/
+GCE_17yr_data/dSphs/
