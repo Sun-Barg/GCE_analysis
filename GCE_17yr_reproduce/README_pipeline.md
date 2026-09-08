@@ -356,7 +356,7 @@ WCS preserved (CDELT1=-0.25, CRPIX1/2=120.5, GLON-CAR / GLAT-CAR
 projection — already paper-faithful: left edge = +30 deg l, right edge
 = -30 deg l, standard galactic convention).
  
-**Resolves memory #18 (2026-05-23, retraction)**: the earlier
+**Retraction (2026-05-23)**: the earlier
 hypothesis that the MapCube conversion stage was the root cause of
 (β) ranking inversion ("1.76× model-dependent jump from raw to
 MapCube") is **falsified**. The "1.76×" was a 38-bin total-integral
@@ -375,7 +375,7 @@ spatial orientation. **Corrected 2026-06-08:** the "mask convention V44
 flip; the psc mask is built in the CCUBE frame and applied as-is (un-flipped
 mask covers 88% of source cores vs 58% if flipped — do NOT flip the mask;
 memory #22). And "(β) ranking inversion" is DEAD, not an open unidentified
-phenomenon: post-flip (`data[:,:,::-1]` on pion/bremss/ics; memory #16) the
+phenomenon: post-flip (`data[:,:,::-1]` on pion/bremss/ics) the
 17yr ranking is valid (best = Model X, #1).
  
 **Sanghwan CELL 5 caveat**: that notebook applies
@@ -471,7 +471,7 @@ dmesg OOM entries were unrelated historical.
   the full 80-model main fit was rerun after the MapCube axis=2 flip.
   Current ranking is VALID: our 17yr best = Model X (#1), Cholis-XLIX →
   #11, Spearman ρ = 0.97. No further rerun is needed on the template
-  account (see memory #16/#23). (launcher_watchdog was validated: 14
+  account (see the 2026-06-08 correction above). (launcher_watchdog was validated: 14
   restarts, zero data loss.)
 - `results_cov_17yr/*.dat`: **22 / 22** (cov MCMC complete;
   launcher_watchdog 1 restart 2026-05-18 03:44, zero data loss,
