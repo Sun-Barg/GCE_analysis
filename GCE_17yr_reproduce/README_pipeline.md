@@ -373,8 +373,8 @@ multiplicative factor 1e-3/E_GeV²) and fit results are uncompromised by
 spatial orientation. **Corrected 2026-06-08:** the "mask convention V44
 (`np.flip(mask, axis=2)`)" clause is STALE — the fit code has NO mask
 flip; the psc mask is built in the CCUBE frame and applied as-is (un-flipped
-mask covers 88% of source cores vs 58% if flipped — do NOT flip the mask;
-memory #22). And "(β) ranking inversion" is DEAD, not an open unidentified
+mask covers 88% of source cores vs 58% if flipped — do NOT flip the mask).
+And "(β) ranking inversion" is DEAD, not an open unidentified
 phenomenon: post-flip (`data[:,:,::-1]` on pion/bremss/ics) the
 17yr ranking is valid (best = Model X, #1).
  
