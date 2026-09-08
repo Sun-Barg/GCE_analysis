@@ -322,7 +322,7 @@ python make_gce_template.py           # backup buggy → write fixed (~3 min)
 > template → INVALID → Model X rank 1→27 regression → must rerun" note is
 > PRE-FLIP. The full 80-model 17yr main fit HAS been rerun after the
 > MapCube axis=2 flip (`data[:,:,::-1]` on pion/bremss/ics; memory
-> #16/#23). The current ranking is VALID — 해밝's 17yr best = Model X (#1),
+> #16/#23). The current ranking is VALID — our 17yr best = Model X (#1),
 > Cholis-XLIX → #11, Spearman ρ = 0.97 vs Cholis. There is no "rank 1→27
 > regression". Kept only so the stale phrasing is recognized as stale.
  
@@ -469,7 +469,7 @@ dmesg OOM entries were unrelated historical.
   ~~INVALIDATED 2026-05-19~~ is SUPERSEDED (Corrected 2026-06-08). The
   buggy GCE template was regenerated (integral 1.0, cov-consistent) and
   the full 80-model main fit was rerun after the MapCube axis=2 flip.
-  Current ranking is VALID: 해밝's 17yr best = Model X (#1), Cholis-XLIX →
+  Current ranking is VALID: our 17yr best = Model X (#1), Cholis-XLIX →
   #11, Spearman ρ = 0.97. No further rerun is needed on the template
   account (see memory #16/#23). (launcher_watchdog was validated: 14
   restarts, zero data loss.)
@@ -484,8 +484,8 @@ dmesg OOM entries were unrelated historical.
   `make_perroi_ccube.py` formalizes the missing cov-notebook cell 6.
 ### OPEN residual — c_iso → 0 at mid-E (NOT "not a bug", NOT accepted)
  
-**Corrected 2026-06-08.** The old header "(not a bug)" and "해밝 accepted
-V48 conclusion (proceed)" are RETIRED — 해밝 never agreed; c_iso → 0 is an
+**Corrected 2026-06-08.** The old header "(not a bug)" and "the author accepted
+V48 conclusion (proceed)" are RETIRED — the author never agreed; c_iso → 0 is an
 OPEN, unreconciled residual.
  
 **17yr determination** (Plot 6 = `06_coefficient_comparison.png`): c_iso
@@ -504,7 +504,7 @@ systematic-uncertainty indicators, not physical GDE calibration; GCE
 flux envelope robust to c-swap. Rejected: chi² weight increase /
 informative prior (paper deviation) / nsteps increase. Cholis 2022 is
 the only methodological reference; paper-exact is mandatory unless
-explicitly approved by 해밝.
+explicitly approved by the author.
  
 ## File version conventions
  

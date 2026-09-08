@@ -53,3 +53,13 @@ Prompt_spectra/Pythia_data/
 # 협력자 제공 자료 (별도 저장소 분리 예정)
 GCE_17yr_data/pbar/
 GCE_17yr_data/dSphs/
+
+# 원시 데이터 / 외부 배포 자료 / 중간 산출물
+Making_cov/data/
+Making_cov/Covariance_Matrix_Information/
+GCE_TEMPLATES_FILES_v3/
+GCE_12yr_reproduce/MapCubes
+GCE_16yr_reproduce/MapCubes
+
+# 저장소 정리용 일회성 도구
+strip_nb_outputs.py

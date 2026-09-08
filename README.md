@@ -19,25 +19,35 @@ Hae Barg Kang, Sang Hwan Kim, Seodong Shin — Jeonbuk National University
 
 ## Start here
 
-The single most detailed document in this repository is
-**[`GCE_17yr_reproduce/README_pipeline.md`](GCE_17yr_reproduce/README_pipeline.md)**
-(492 lines). It is the authoritative index of the production pipeline and
-contains, for every file: purpose, inputs, outputs, prerequisites, CLI, and
-current state.
+The most detailed document in this repository is
+**[`GCE_17yr_reproduce/README_pipeline.md`](GCE_17yr_reproduce/README_pipeline.md)**.
+It is the authoritative index of the production pipeline: for every file,
+its purpose, inputs, outputs, prerequisites, CLI, and current state.
 
-It also records the engineering history that produced the pipeline:
+It is kept as a working record rather than a polished summary. Superseded
+conclusions are marked as superseded and left in place, so that stale
+phrasing encountered elsewhere can be recognised as stale. Four episodes are
+documented end to end:
 
-| Record | What it contains |
+| Episode | Record |
 |---|---|
-| **SIGKILL root cause** | Workers were killed externally when entering `emcee` after `fermitools` (`GtApp`) had run in the same process. Localized by a **6-job controlled experiment** (Pool on/off × fresh/reused source maps × single/multi process). The earlier "VS Code tqdm PTY overflow" hypothesis is documented **and rejected**, not deleted. |
-| **GCE template normalization bug** | The main pipeline *referenced* a spatial template that no pipeline code generated. Its inherited normalization line summed only row 0 of the map and used the wrong pixel scale, giving integral **0.7259** instead of 1.0. Discovery → impact assessment (main invalid / covariance unaffected) → cross-validation against the covariance branch (identical map sum, `3.282807e+05`) → rerun decision. |
-| **Stale-file vulnerability** | A mid-run `SIGKILL` could leave partial intermediates that the next launcher pass would silently reuse. Fixed with **9 integrity verifiers** on a `(ok, msg)` contract, atomic `.tmp + os.rename` writes, and an explicit FATAL-on-stale policy (never silent reuse). |
-| **Unattended recovery** | `launcher_watchdog*.sh` recovers launcher silent-death via 60 s polling, orphan reclamation, and restart with auto-exit at target count. **14 restarts, zero data loss** on the main run. |
+| **SIGKILL, root cause** | Workers were killed externally when entering `emcee` after `fermitools` (`GtApp`) had run in the same process. Localised by a **six-job controlled experiment** varying pool on/off, fresh vs. reused source maps, and single vs. multi-process. The earlier "VS Code tqdm PTY overflow" hypothesis is documented **and rejected**, not deleted. Fix: serial sampler plus a `prepare` / `mcmc` subprocess split, so the fermitools state dies with the first process. |
+| **GCE template normalisation** | The pipeline *referenced* a spatial template that no pipeline code generated. Its inherited normalisation summed only row 0 of the map and used the wrong pixel scale, giving integral **0.7259** instead of 1.0. Discovery → impact assessment → cross-validation against the covariance branch (identical map sum, `3.282807e+05`) → regeneration, with the old file preserved as a backup. |
+| **MapCube axis orientation** | A separate defect found after the template fix: the diffuse component cubes required an axis-2 flip, and this — not the template — was the origin of an anomalous model ranking. The full 80-model fit was rerun afterwards. |
+| **Mask orientation, settled quantitatively** | Whether the point-source mask needed the same flip was decided by measurement rather than by symmetry with the cube: the un-flipped mask covers **88 %** of source cores against **58 %** when flipped. The fit therefore applies the mask in the CCUBE frame, un-flipped, and the earlier note claiming a flip convention is marked stale. |
 
-> **Current result state:** the 80-model main fit completed but was produced
-> with the buggy template and is marked **invalid pending rerun**. The
-> covariance branch (22 ROI) used the correct normalization and is unaffected.
-> See the status section of `README_pipeline.md` for details.
+**Result state.** The 80-model main fit has been rerun after both fixes and
+the current outputs are valid. The recovered model ranking is consistent
+with the reference analysis; the rank correlation and per-model ordering are
+reported in `README_pipeline.md`.
+
+**Stale-file protection.** A mid-run kill could once leave partial
+intermediates that the next launcher pass silently reused. The pipeline now
+ships **9 integrity verifiers** on an `(ok, msg)` contract, atomic
+`.tmp + os.rename` writes, and an explicit fail-on-stale policy — never
+silent reuse. Unattended runs are held up by `launcher_watchdog*.sh`
+(60 s polling, orphan reclamation, restart, auto-exit at target count):
+**14 restarts, zero data loss** on the main run.
 
 ---
 
@@ -49,44 +59,53 @@ It also records the engineering history that produced the pipeline:
 | Energy binning | 14 bins, 0.274698 – 51.9312 GeV |
 | Region | 60° × 60° around the Galactic Center, 600 × 600 × 14 counts cube |
 | Forward model | `gtsrcmaps` (PSF convolution) + `gtexpcube2` + `gtmodel` — instrument response folded into the model, no deconvolution |
-| Decomposition | 5-component Poisson template fit (π⁰, bremsstrahlung, ICS, isotropic, Fermi bubbles) + GCE NFW² template |
+| Decomposition | 5-component Poisson template fit (π⁰, bremsstrahlung, ICS, isotropic, Fermi bubbles) plus a GCE NFW² template |
 | Main fit | 80 Galactic-diffuse-emission models, MCMC 100 walkers × 1000 steps × 400 burn-in |
 | Systematics | 22 ROIs at 20° ≤ \|ℓ\| ≤ 70°, step 5° → 14 × 14 covariance matrix (cond ≈ 2.4 × 10⁵) |
+| Cross-checks | Parallel 4FGL-DR4 track for catalog comparison; synthetic-covariance generation with recovery verification; 16 yr reproduction compared against the predecessor analysis |
 
 ---
 
 ## Layout
 
 ```
-GCE_17yr_reproduce/   17.5 yr production pipeline — 17 scripts + README_pipeline.md
-GCE_12yr_reproduce/   12 yr reproduction (earlier validation stage)
-Cov/                  16 yr covariance matrix products (.npy)
+GCE_17yr_reproduce/   17.5 yr production pipeline — workers, launchers,
+                      watchdogs, integrity verifiers, covariance assembly,
+                      synthetic-covariance validation, DR4 parallel track
+                      + README_pipeline.md (start here)
+GCE_16yr_reproduce/   16 yr reproduction and comparison against the
+                      predecessor 16 yr analysis
+GCE_12yr_reproduce/   12 yr reproduction (earliest validation stage)
+GCE_12yr_data/        12 yr data-level modules (source lists, masks,
+                      likelihood, model components)
+GCE_17yr_data/        17 yr data-level modules (source map preparation,
+                      fitting phases, catalog counting)
+GCE_allsky_data/      photon / spacecraft acquisition and weekly-completeness
+                      verification
+Cov/                  16 yr covariance matrix products
 GCE_16yr_data/        16 yr GDE fit results
-GCE_12yr_data/        isotropic spectrum reference data
-Prompt_spectra/       DM annihilation prompt photon spectra (Pythia output)
-PPPC4/                external reference spectra — PPPC4DMID (Cirelli et al. 2011)
+Prompt_spectra/       DM annihilation prompt photon spectra — extraction and
+                      interpolation code
+CascadeSpectra/       cascade spectrum utilities
+PPPC4/                external reference spectra — PPPC4DMID (Cirelli et al.)
 docs/                 miscellaneous notes
+legacy/               superseded notebooks, kept for provenance
 ```
 
-<!-- TREE-DEPENDENT: add the following lines only if the corresponding
-     directories are present in the published tree.
-GCE_16yr_reproduce/   16 yr overlay / comparison
-GCE_17yr_data/        17 yr data-level analysis
-Making_cov/           covariance construction tutorials and practice notebooks
--->
-
 Large intermediate products (FITS cubes, livetime cubes, exposure maps,
-per-model fit outputs) are not tracked; they are regenerated by the pipeline.
+per-model fit outputs) and bulk result tables are not tracked; they are
+regenerated by the pipeline. Prompt spectrum data files are produced by the
+companion MadGraph5 + Pythia8 pipeline (see *Related repositories*).
 
 ---
 
 ## Environment
 
 - Python 3, `numpy`, `scipy`, `astropy`, `emcee`, `matplotlib`
-- [Fermitools](https://github.com/fermi-lat/Fermitools-conda) (`gtselect`,
-  `gtmktime`, `gtbin`, `gtltcube`, `gtexpcube2`, `gtsrcmaps`, `gtmodel`)
+- [Fermitools](https://github.com/fermi-lat/Fermitools-conda) — `gtselect`,
+  `gtmktime`, `gtbin`, `gtltcube`, `gtexpcube2`, `gtsrcmaps`, `gtmodel`
 
-Quick-start command sequence is at the end of `README_pipeline.md`.
+A quick-start command sequence is at the end of `README_pipeline.md`.
 
 ---
 
@@ -94,11 +113,19 @@ Quick-start command sequence is at the end of `README_pipeline.md`.
 
 | Period | Author | Scope |
 |---|---|---|
-| 2025-11 | Sang Hwan Kim | Repository initialization; 16 yr GDE fit results and covariance matrices; directory organization |
-| 2026-04 – | Hae Barg Kang | 12 yr reproduction update; design and implementation of the 17.5 yr pipeline (data preparation, per-model and per-ROI workers, launchers, watchdogs, integrity verifiers); covariance assembly and validation; GCE template regeneration |
+| 2025-11 | Sang Hwan Kim | Repository initialisation; 16 yr GDE fit results and covariance matrices; directory organisation |
+| 2026-04 – | Hae Barg Kang | 12 yr and 16 yr reproductions; design and implementation of the 17.5 yr pipeline (data preparation, per-model and per-ROI workers, launchers, watchdogs, integrity verifiers); covariance assembly, validation and synthetic-data recovery tests; template regeneration and orientation fixes |
 
 Sang Hwan Kim's 16 yr code served as an implementation reference only; the
 methodological reference for the 17.5 yr analysis is Cholis et al. 2022.
+
+---
+
+## Related repositories
+
+- **Prompt spectra pipeline** — MadGraph5 + Pythia8 mass-scan orchestration,
+  spectrum extraction, interpolation, and validation against PPPC4DMID.
+  *(link to be added)*
 
 ---
 
@@ -108,7 +135,7 @@ methodological reference for the 17.5 yr analysis is Cholis et al. 2022.
 - FL16Y point-source catalog (`gll_psc_v40.fit`): LAT 16-Year Source List.
 - `PPPC4/` contains reference spectra tables from **PPPC4DMID**
   (Cirelli et al., [arXiv:1012.4515](https://arxiv.org/abs/1012.4515)),
-  redistributed here for reproducibility. Please cite the original work.
+  redistributed for reproducibility. Please cite the original work.
 
 ---
 
