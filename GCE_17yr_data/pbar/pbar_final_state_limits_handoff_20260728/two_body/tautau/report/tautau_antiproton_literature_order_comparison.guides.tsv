@@ -1,4 +1,0 @@
-guide	x_min_GeV	x_max_GeV	y_min_cm3_s	y_max_cm3_s	note
-Cirelli_Giesen_2013_PAMELA_mutau_visual	1.0e1	1.0e3	1.0e-22	1.0e-21	Approximate Fig.2 leptonic mu/tau antiproton exclusion band; not digitized.
-Calore_et_al_2022_AMS02_leptonic_expectation	1.0e2	1.0e3	3.0e-23	3.0e-21	Order guide from statement that leptonic antiproton bounds probe cross sections about 1e3 above hadronic modes.
-Fermi_dSph_tau_reference	1.0e1	1.0e2	1.0e-27	3.0e-26	Gamma-ray dwarf reference scale, not an antiproton bound; shown only to contrast messenger sensitivity.
