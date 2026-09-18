@@ -1,0 +1,35 @@
+nohup: ignoring input
+[2026-04-23 13:34:26] ============================================================
+[2026-04-23 13:34:26] Spacecraft download started
+[2026-04-23 13:34:26] Target dir : ./sc_files
+[2026-04-23 13:34:26] Week range : w009 -- w950
+[2026-04-23 13:34:26] Base URL   : https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/weekly/spacecraft
+[2026-04-23 13:34:26] ============================================================
+[2026-04-23 13:34:36]   ✗ w512 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:34:46]   ✗ w934 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:34:55]   ✗ w935 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:04]   ✗ w936 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:13]   ✗ w937 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:22]   ✗ w938 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:31]   ✗ w939 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:40]   ✗ w940 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:49]   ✗ w941 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:35:59]   ✗ w942 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:08]   ✗ w943 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:17]   ✗ w944 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:26]   ✗ w945 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:35]   ✗ w946 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:44]   ✗ w947 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:36:53]   ✗ w948 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:37:02]   ✗ w949 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:37:11]   ✗ w950 FAILED after 3 attempts (last HTTP: 000)
+[2026-04-23 13:37:11] ============================================================
+[2026-04-23 13:37:11] Spacecraft download finished
+[2026-04-23 13:37:11]   downloaded     : 0
+[2026-04-23 13:37:11]   skipped (have) : 924
+[2026-04-23 13:37:11]   failed         : 18
+[2026-04-23 13:37:11]   future (404)   : 0
+[2026-04-23 13:37:11] ============================================================
+[2026-04-23 13:37:11] Failed weeks: w512(HTTP:000) w934(HTTP:000) w935(HTTP:000) w936(HTTP:000) w937(HTTP:000) w938(HTTP:000) w939(HTTP:000) w940(HTTP:000) w941(HTTP:000) w942(HTTP:000) w943(HTTP:000) w944(HTTP:000) w945(HTTP:000) w946(HTTP:000) w947(HTTP:000) w948(HTTP:000) w949(HTTP:000) w950(HTTP:000)
+[2026-04-23 13:37:11] ↻ 다시 실행하면 자동으로 retry 합니다.
+[2026-04-23 13:37:11] Total spacecraft files in ./sc_files : 924

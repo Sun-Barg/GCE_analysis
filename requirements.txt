@@ -1,0 +1,35 @@
+# Python dependencies for the GCE analysis pipeline.
+#
+# Fermitools cannot be installed with pip. Create the environment with conda
+# first, then install the packages below into it:
+#
+#   conda create -n fermi -c conda-forge -c fermi fermitools
+#   conda activate fermi
+#   pip install -r requirements.txt
+#
+# Pinned versions are those of the environment the current results were
+# produced in.
+
+numpy==1.26.4
+scipy==1.17.1
+astropy==6.1.7
+pandas==2.3.3
+matplotlib==3.10.8
+emcee==3.1.6
+
+# Builds the point-source XML model from the catalog.
+# Third-party, GPL-3.0, by Tyrel Johnson — see "Third-party components"
+# in README.md. Not redistributed in this repository.
+LATSourceModel==1.10.11
+
+# Posterior inspection and diagnostics used by the analysis notebooks
+corner==2.2.3
+dynesty==3.0.0
+chainconsumer
+iminuit
+psutil
+
+# Optional — only for the gcepy cross-check notebook
+# (gcepy itself is not on PyPI: clone https://github.com/samueldmcdermott/gcepy
+#  and `python -m pip install .`)
+# jax

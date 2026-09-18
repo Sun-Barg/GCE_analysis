@@ -37,12 +37,6 @@ The --plot flag emits a sanity-check figure (cov matrix heatmap + sigma_sys
 curve) to results_cov_17yr/cov_matrix_validation.png.
 
 Author: haebarg (2026)
-
-Changes:
-  [fb17-cov-v1] (2026-07-28) FB17=1 env -> front+back 17-bin cov variant
-      (main pipeline과 동일 패턴): WORK_DIR/FRONT/evtype 전환, 결과는
-      results_cov_fb17/ 분리(기존 front 22개 .dat와 카운트 충돌 방지).
-      env 미설정 시 기존 fiducial 동작과 동일.
 """
 
 import os
@@ -56,19 +50,11 @@ assert len(ALL_ROIS) == 22
 
 FRONT = '_front'
 
-# FB17 variant — env switch: front_back 네이밍 + 기본 cov-dir 전환.
-FB17 = bool(os.environ.get('FB17', '').strip())
-_DEFAULT_COV_DIR = 'results_cov_fb17' if FB17 else 'results_cov_17yr'
-if FB17:
-    FRONT = '_front_back'
-    print(f'[config] FB17=1 -> FRONT={FRONT!r}, '
-          f'default cov-dir={_DEFAULT_COV_DIR}', flush=True)
-
 
 def load_one(cov_dir, roi):
     """Load one per-ROI cov fit npz. Returns (E, delta_E, GCE_template,
     fitted_params_2_chain) or raises FileNotFoundError if missing."""
-    path = os.path.join(cov_dir, f'GCE_cov_l{roi}{FRONT}_17yr_cholis_fit.npz')
+    path = os.path.join(cov_dir, f'GCE_cov_l{roi}{FRONT}_17yr_cholis_DR4_fit.npz')
     if not os.path.exists(path):
         raise FileNotFoundError(f'missing: {path}')
     d = np.load(path)
@@ -77,10 +63,10 @@ def load_one(cov_dir, roi):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--cov-dir', type=str, default=_DEFAULT_COV_DIR,
+    ap.add_argument('--cov-dir', type=str, default='results_cov_17yr',
                     help='directory containing per-ROI fit npz files')
     ap.add_argument('--out', type=str, default=None,
-                    help='output npz path (default: {cov-dir}/GCE_systematic_covariance_matrix_17yr.npz)')
+                    help='output npz path (default: {cov-dir}/GCE_systematic_covariance_matrix_17yr_DR4.npz)')
     ap.add_argument('--rois', type=str, default='',
                     help='comma-separated ROI subset (default: use all available)')
     ap.add_argument('--use-median', action='store_true',
@@ -94,7 +80,7 @@ def main():
         print(f'[FATAL] cov-dir not found: {args.cov_dir}')
         sys.exit(2)
     out_path = args.out or os.path.join(args.cov_dir,
-                                        'GCE_systematic_covariance_matrix_17yr.npz')
+                                        'GCE_systematic_covariance_matrix_17yr_DR4.npz')
 
     if args.rois.strip():
         rois = [int(r.strip()) for r in args.rois.split(',') if r.strip()]

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-run_one_model.py — 17yr GCE main fit for a single GDE model.
+run_one_model.py — 16yr GCE main fit for a single GDE model.
 
 Per-model subprocess wrapper for the main fit pipeline. Reproduces the logic
-of GC_analysis-60x60-models_17yr_v13.ipynb cell 30, restricted to one model.
+of GC_analysis-60x60-models_16yr_v13.ipynb cell 30, restricted to one model.
 
 Changes vs cell 30:
   1. CONFIG (cell 3) mirrored at top of file
@@ -38,14 +38,6 @@ Changes vs cell 30:
      returns success but produces a corrupt file is caught immediately
      rather than poisoning downstream cascading. Companion to the
      Phase 2 prep separation (prepare_common.py, prepare_one_roi_cov.py).
- 12. [v3.3-fb17] FB17=1 env -> front+back 17-bin variant
-     (PHASE2_CASE-style switch): WORK_DIR=./GC_analysis_FL16Y_fb17,
-     front='_front_back', evtype=3. Everything else follows
-     automatically: E/delta_E and the MCMC loop derive from the CCUBE
-     EBOUNDS (n = len(E)); verify_* bin contracts come from
-     cholis_masking.EXPECTED_NEBINS (env-driven); external constraints
-     interpolate to whatever bin centers E holds. Mutually exclusive
-     with PHASE2_CASE. Bin-count contract asserted after EBOUNDS load.
 
 Usage:
     python run_one_model.py <ROMAN>
@@ -78,7 +70,6 @@ from GtApp import GtApp
 
 from cholis_masking import (
     verify_fits, verify_cube, verify_xml, verify_dat, verify_srcmap,
-    EXPECTED_NEBINS as _CM_EXPECTED_NEBINS,
 )
 
 
@@ -98,11 +89,11 @@ MASK_SCALE = 1.0                       # Cholis Table III strict
 
 # Catalog
 DR_NUMBER    = 4
-CATALOG_FILE = '../GCE_17yr_data/gll_psc_v40.fit'
+CATALOG_FILE = '/home/sanghwan/FermiLAT/Sanghwan/GC_analysis/gll_psc_v35.fit'  # vestigial here (unused); kept consistent
 
 # Diffuse + isotropic
-GALACTIC_FILE  = '../gll_iem_v07.fits'
-ISOTROPIC_FILE = '../iso_P8R3_CLEAN_V3_v1.txt'
+GALACTIC_FILE  = '../GCE_17yr_data/gll_iem_v07.fits'
+ISOTROPIC_FILE = '../GCE_17yr_data/iso_P8R3_CLEAN_V3_v1.txt'
 
 # Spacecraft
 SC_MERGED_FILE = '../GCE_allsky_data/lat_spacecraft_merged_17yr.fits'
@@ -111,8 +102,8 @@ SC_FILE        = SC_MERGED_FILE
 # Templates / spectra
 WIMP_MAP_PATH        = './GCE_template_NFW2.fits'
 BUBBLE_TEMPLATE      = './Fermi_Bubbles_template.fits'
-ISO_SPECTRUM_FILE    = './isotropic_spectrum_ff.txt'
-BUBBLE_SPECTRUM_FILE = './fermi_bubble_spectrum.txt'
+ISO_SPECTRUM_FILE    = '/home/sanghwan/FermiLAT/Sanghwan/GC_14yr/data/Model/isotropic_spectrum.txt'
+BUBBLE_SPECTRUM_FILE = '/home/sanghwan/FermiLAT/Sanghwan/GC_14yr/data/Model/fermi_bubble_spectrum.txt'
 
 # GDE MapCubes
 MAPCUBE_DIR_PION   = './MapCubes'
@@ -121,67 +112,11 @@ MAPCUBE_DIR_ICS    = './MapCubes'
 MAPCUBE_EXT        = '.fits'
 
 # Working directory
-WORK_DIR = './GC_analysis_FL16Y'
-
-# FB17 variant (front+back, 17 bins) — env switch, PHASE2_CASE-style.
-FB17 = bool(os.environ.get('FB17', '').strip())
-if FB17:
-    WORK_DIR      = './GC_analysis_FL16Y_fb17'
-    front         = '_front_back'
-    evtype_number = 3
-    print(f'[config] FB17=1 -> WORK_DIR={WORK_DIR}, front={front!r}, '
-          f'evtype={evtype_number}', flush=True)
-
-# Phase 2 case test (2026-05-27): PHASE2_CASE = '' / 'A' / 'B' / 'C' / 'D'
-#   ''  → 본 dir 운영 (변경 없음)
-#   A   → flip only (resample default 'yes', edisp_bins default 0)
-#   B   → flip + resample='no'
-#   C   → flip + edisp_bins=-1
-#   D   → flip + resample='no' + edisp_bins=-1
-CASE = os.environ.get('PHASE2_CASE', '').strip()
-if CASE:
-    if CASE not in ('A', 'B', 'C', 'D'):
-        raise ValueError(f"PHASE2_CASE must be one of A/B/C/D, got {CASE!r}")
-    if FB17:
-        raise ValueError('PHASE2_CASE and FB17 are mutually exclusive')
-    WORK_DIR = f'./GC_analysis_FL16Y_case{CASE}'
-    CASE_SUFFIX    = f'_case{CASE}'
-    RESAMPLE_OPT   = 'no' if CASE in ('B', 'D') else None
-    EDISP_BINS_OPT = -1   if CASE in ('C', 'D') else None
-else:
-    CASE_SUFFIX    = ''
-    RESAMPLE_OPT   = None
-    EDISP_BINS_OPT = None
+WORK_DIR = './GC_analysis_DR4'
 
 # Subprocess-specific
 POOL_PROCESSES = 4                     # emcee worker count per subprocess
 
-# Catalog-variant PSC mask (catalog-update systematic study)
-#   MASK_VARIANT='FL16Y' (default) -> fiducial 17yr mask, ''-suffix (동작 불변)
-#   MASK_VARIANT='DR2'             -> 4FGL-DR2 mask, '_DR2'-suffix 출력
-MASK_VARIANT  = os.environ.get('MASK_VARIANT', 'FL16Y').strip()
-PSC_MASK_FILE = f'GC_mask_60x60_definitions_{MASK_VARIANT}.npy'
-VAR_SUFFIX    = '' if MASK_VARIANT == 'FL16Y' else f'_{MASK_VARIANT}'
-print(f'[config] MASK_VARIANT={MASK_VARIANT!r} -> mask={PSC_MASK_FILE}, suffix={VAR_SUFFIX!r}', flush=True)
-
-# TS_GCE null-hypothesis toggle (Section 7 GCE detection significance).
-#   FIX_CGCE_ZERO unset/''  -> full 5-template fit (default; behaviour unchanged)
-#   FIX_CGCE_ZERO=1         -> GCE normalization clamped to 0 inside the
-#                              likelihood (see log_likelihood below); the other
-#                              four templates (pion+bremss, ICS, bubble, iso)
-#                              still float. All outputs carry a '_cGCE0' suffix
-#                              so the full-fit .dat / _fit.npz / _likelihood_value
-#                              are never overwritten. The per-bin maximum
-#                              log-likelihoods then satisfy
-#                                  TS_GCE = 2 * (sum_lnL_full - sum_lnL_cGCE0),
-#                              summed over the 14 energy bins (compute_TS_GCE.py).
-#   Idempotent: same os.environ pattern as PHASE2_CASE / MASK_VARIANT above —
-#   setting the variable only changes the clamp + the output suffix.
-FIX_CGCE_ZERO = bool(os.environ.get('FIX_CGCE_ZERO', '').strip())
-CGCE_SUFFIX   = '_cGCE0' if FIX_CGCE_ZERO else ''
-if FIX_CGCE_ZERO:
-    print('[config] FIX_CGCE_ZERO=1 -> c_GCE clamped to 0 (TS_GCE null fit); '
-          f'output suffix={CGCE_SUFFIX!r}', flush=True)
 
 # ============================================================
 # Integrity-check helpers (v3 — mirrors prepare_common.py Step.run policy)
@@ -242,7 +177,7 @@ if len(sys.argv) != 2:
     sys.exit(1)
 model = sys.argv[1].strip()
 
-out_dat = f'./GCE_model_{model}{front}_17yr_cholis{CASE_SUFFIX}{VAR_SUFFIX}{CGCE_SUFFIX}.dat'
+out_dat = f'./GCE_model_{model}{front}_16yr_cholis.dat'
 if os.path.exists(out_dat):
     ok, msg = verify_dat(out_dat)
     if ok:
@@ -256,7 +191,7 @@ if os.path.exists(out_dat):
     print(f'       deleting and re-running model {model} from scratch.')
     os.remove(out_dat)
     for _ext in ['_fit.npz', '_likelihood_value']:
-        _companion = f'./GCE_model_{model}{front}_17yr_cholis{CASE_SUFFIX}{VAR_SUFFIX}{CGCE_SUFFIX}{_ext}'
+        _companion = f'./GCE_model_{model}{front}_16yr_cholis{_ext}'
         if os.path.exists(_companion):
             os.remove(_companion)
             print(f'       removed companion {_companion}')
@@ -323,7 +258,7 @@ new_sources = f"""
 # ^^^ Bug C patched here: Fermi_bubble Normalization scale="1" value="1"
 
 new_sources_root = ET.fromstring(f"<sources>{new_sources}</sources>")
-tree = ET.parse(f'{WORK_DIR}/Model/GC_psc_model_FL16Y.xml')
+tree = ET.parse(f'{WORK_DIR}/Model/GC_psc_model_DR4.xml')
 root = tree.getroot()
 for new_source in new_sources_root:
     root.append(new_source)
@@ -362,25 +297,21 @@ if not _check_or_abort(_xml_path, lambda: verify_xml(_xml_path, min_sources=1), 
 # Step 3 — gtsrcmaps × 2 (convol=yes / convol=no)
 # ============================================================
 for convol_setting, convol_suffix in [('yes', ''), ('no', '_no_convol')]:
-    _srcmap_out = f'{WORK_DIR}/GC_Extended_srcmap_17yr{front}_clean_model_{model}{convol_suffix}.fits'
+    _srcmap_out = f'{WORK_DIR}/GC_Extended_srcmap_16yr{front}_clean_model_{model}{convol_suffix}.fits'
     _label = f'gtsrcmaps (convol={convol_setting}, model {model})'
     if _check_or_abort(_srcmap_out, lambda: verify_srcmap(_srcmap_out), _label):
         continue
     print(f'[run ] {_label} -> {_srcmap_out}')
     srcMaps = GtApp('gtsrcmaps', 'Likelihood')
     srcMaps['scfile']  = SC_FILE
-    srcMaps['expcube'] = f'{WORK_DIR}/Allsky_ltcube_17yr{front}_clean.fits'
-    srcMaps['cmap']    = f'{WORK_DIR}/GC_ccube_17yr{front}_clean.fits'
-    srcMaps['bexpmap'] = f'{WORK_DIR}/Allsky_expcube_edge_17yr{front}_clean.fits'
+    srcMaps['expcube'] = f'{WORK_DIR}/Allsky_ltcube_16yr{front}_clean.fits'
+    srcMaps['cmap']    = f'{WORK_DIR}/GC_ccube_16yr{front}_clean.fits'
+    srcMaps['bexpmap'] = f'{WORK_DIR}/Allsky_expcube_edge_16yr{front}_clean.fits'
     srcMaps['srcmdl']  = f'{WORK_DIR}/Model/GC_Extended_model{model}_test.xml'
     srcMaps['outfile'] = _srcmap_out
     srcMaps['irfs']    = IRFS
     srcMaps['convol']  = convol_setting
     srcMaps['evtype']  = evtype_number
-    if RESAMPLE_OPT is not None:
-        srcMaps['resample'] = RESAMPLE_OPT
-    if EDISP_BINS_OPT is not None:
-        srcMaps['edisp_bins'] = EDISP_BINS_OPT
     srcMaps.run()
     _verify_built_or_abort(_srcmap_out, lambda: verify_srcmap(_srcmap_out), _label)
 
@@ -415,7 +346,7 @@ for component in ['bremss', 'ics', 'pion']:
 
 for convol_setting, convol_suffix in [('yes', ''), ('no', '_no_convol')]:
     for component in ['pion', 'bremss', 'ics']:
-        _gtm_out = f'{WORK_DIR}/GC_{component}_model{model}_17yr{front}_clean{convol_suffix}.fits'
+        _gtm_out = f'{WORK_DIR}/GC_{component}_model{model}_16yr{front}_clean{convol_suffix}.fits'
         _label = f'gtmodel ({component}, convol={convol_setting}, model {model})'
         if _check_or_abort(_gtm_out,
                            lambda p=_gtm_out: verify_cube(p, expected_xy=(600, 600)),
@@ -427,11 +358,11 @@ for convol_setting, convol_suffix in [('yes', ''), ('no', '_no_convol')]:
         gtmodel['outtype'] = 'ccube'
         gtmodel['srcmdl']  = f'{WORK_DIR}/Model/GC_{component}_model{model}_test.xml'
         gtmodel['outfile'] = _gtm_out
-        gtmodel['expcube'] = f'{WORK_DIR}/Allsky_ltcube_17yr{front}_clean.fits'
-        gtmodel['bexpmap'] = f'{WORK_DIR}/Allsky_expcube_edge_17yr{front}_clean.fits'
+        gtmodel['expcube'] = f'{WORK_DIR}/Allsky_ltcube_16yr{front}_clean.fits'
+        gtmodel['bexpmap'] = f'{WORK_DIR}/Allsky_expcube_edge_16yr{front}_clean.fits'
         gtmodel['convol']  = convol_setting
         gtmodel['evtype']  = evtype_number
-        gtmodel['srcmaps'] = f'{WORK_DIR}/GC_Extended_srcmap_17yr{front}_clean_model_{model}{convol_suffix}.fits'
+        gtmodel['srcmaps'] = f'{WORK_DIR}/GC_Extended_srcmap_16yr{front}_clean_model_{model}{convol_suffix}.fits'
         gtmodel.run()
         _verify_built_or_abort(_gtm_out,
                                lambda p=_gtm_out: verify_cube(p, expected_xy=(600, 600)),
@@ -498,9 +429,9 @@ for _src_name, _src_xml in _src_specs.items():
                            _label)
 
 for _convol_setting, _convol_suffix in [('yes', ''), ('no', '_no_convol')]:
-    _src_srcmap = f'{WORK_DIR}/GC_Extended_srcmap_17yr{front}_clean_model_{model}{_convol_suffix}.fits'
+    _src_srcmap = f'{WORK_DIR}/GC_Extended_srcmap_16yr{front}_clean_model_{model}{_convol_suffix}.fits'
     for _comp_name in ['GCE', 'fermi_bubble', 'isotropic']:
-        _comp_out = f'{WORK_DIR}/GC_{_comp_name}_model_17yr{front}_clean{_convol_suffix}.fits'
+        _comp_out = f'{WORK_DIR}/GC_{_comp_name}_model_16yr{front}_clean{_convol_suffix}.fits'
         _label = f'gtmodel ({_comp_name}, convol={_convol_setting}, template)'
         if _check_or_abort(_comp_out,
                            lambda p=_comp_out: verify_cube(p, expected_xy=(600, 600)),
@@ -512,8 +443,8 @@ for _convol_setting, _convol_suffix in [('yes', ''), ('no', '_no_convol')]:
         _gtm['outtype']   = 'ccube'
         _gtm['srcmdl']    = f'{WORK_DIR}/Model/GC_{_comp_name}_model.xml'
         _gtm['outfile']   = _comp_out
-        _gtm['expcube']   = f'{WORK_DIR}/Allsky_ltcube_17yr{front}_clean.fits'
-        _gtm['bexpmap']   = f'{WORK_DIR}/Allsky_expcube_edge_17yr{front}_clean.fits'
+        _gtm['expcube']   = f'{WORK_DIR}/Allsky_ltcube_16yr{front}_clean.fits'
+        _gtm['bexpmap']   = f'{WORK_DIR}/Allsky_expcube_edge_16yr{front}_clean.fits'
         _gtm['convol']    = _convol_setting
         _gtm['evtype']    = evtype_number
         _gtm['srcmaps']   = _src_srcmap
@@ -548,7 +479,7 @@ def roi_solid_angle(delta_l_deg, delta_b_deg, b_deg):
     b_rad       = np.radians(b_deg)
     return delta_l_rad * delta_b_rad * np.cos(b_rad)
 
-raw_map = fits.open(f'{WORK_DIR}/GC_ccube_17yr{front}_clean.fits')
+raw_map = fits.open(f'{WORK_DIR}/GC_ccube_16yr{front}_clean.fits')
 w = WCS(raw_map[0].header).dropaxis(2)
 width, height = np.shape(raw_map[0].data[0])
 
@@ -559,9 +490,9 @@ for i in range(0, height, 1):
         steradian_per_pixel[i, j] = roi_solid_angle(0.1, 0.1, b)
 
 disk_mask = np.load(f'{WORK_DIR}/Model/GC_disk_mask_60x60_definitions.npy')[100:500, 100:500]
-psc_mask  = np.load(f'{WORK_DIR}/Model/{PSC_MASK_FILE}')[:, 100:500, 100:500]
+psc_mask  = np.load(f'{WORK_DIR}/Model/GC_mask_60x60_definitions_DR4.npy')[:, 100:500, 100:500]
 
-E_bounds = fits.open(f'{WORK_DIR}/GC_ccube_17yr{front}_clean.fits')[1].data
+E_bounds = fits.open(f'{WORK_DIR}/GC_ccube_16yr{front}_clean.fits')[1].data
 E = np.zeros(len(E_bounds))
 for i in range(0, len(E_bounds), 1):
     E[i] = np.sqrt(E_bounds[i][2] * E_bounds[i][1] * 1e-6) * 1e-3
@@ -569,14 +500,7 @@ delta_E = np.zeros(len(E_bounds))
 for i in range(0, len(E_bounds), 1):
     delta_E[i] = (E_bounds[i][2] - E_bounds[i][1]) * 1e-6
 
-# Bin-count contract: CCUBE bins must equal the verifier expectation
-# (env-driven; 14 fiducial / 17 FB17). A mismatch means the FB17 env was
-# not set consistently for this process vs the prepared workdir.
-assert len(E) == _CM_EXPECTED_NEBINS, (
-    f'CCUBE has {len(E)} bins but EXPECTED_NEBINS={_CM_EXPECTED_NEBINS}; '
-    f'export FB17=1 (or GCE_NEBINS) consistently for prepare AND workers.')
-
-exp_cube = (fits.open(f'{WORK_DIR}/GC_expcube_center_17yr{front}_clean.fits')[0].data
+exp_cube = (fits.open(f'{WORK_DIR}/GC_expcube_center_16yr{front}_clean.fits')[0].data
             [:, 100:500, 100:500] * steradian_per_pixel[100:500, 100:500])
 
 # Mask-averaged template & data flux per bin
@@ -587,16 +511,16 @@ def _mask_avg(path):
         out[i] = np.sum(disk_mask * (d[i][100:500, 100:500] / exp_cube[i])) / np.sum(disk_mask)
     return out
 
-pion   = _mask_avg(f'{WORK_DIR}/GC_pion_model{model}_17yr{front}_clean_no_convol.fits')
-bremss = _mask_avg(f'{WORK_DIR}/GC_bremss_model{model}_17yr{front}_clean_no_convol.fits')
-ics    = _mask_avg(f'{WORK_DIR}/GC_ics_model{model}_17yr{front}_clean_no_convol.fits')
-GCE    = _mask_avg(f'{WORK_DIR}/GC_GCE_model_17yr{front}_clean_no_convol.fits')
-bubble = _mask_avg(f'{WORK_DIR}/GC_fermi_bubble_model_17yr{front}_clean_no_convol.fits')
-isotropic = _mask_avg(f'{WORK_DIR}/GC_isotropic_model_17yr{front}_clean_no_convol.fits')
+pion   = _mask_avg(f'{WORK_DIR}/GC_pion_model{model}_16yr{front}_clean_no_convol.fits')
+bremss = _mask_avg(f'{WORK_DIR}/GC_bremss_model{model}_16yr{front}_clean_no_convol.fits')
+ics    = _mask_avg(f'{WORK_DIR}/GC_ics_model{model}_16yr{front}_clean_no_convol.fits')
+GCE    = _mask_avg(f'{WORK_DIR}/GC_GCE_model_16yr{front}_clean_no_convol.fits')
+bubble = _mask_avg(f'{WORK_DIR}/GC_fermi_bubble_model_16yr{front}_clean_no_convol.fits')
+isotropic = _mask_avg(f'{WORK_DIR}/GC_isotropic_model_16yr{front}_clean_no_convol.fits')
 
 counts_per_exp     = np.zeros(len(E_bounds))
 counts_per_exp_err = np.zeros(len(E_bounds))
-ccube_data = fits.open(f'{WORK_DIR}/GC_ccube_17yr{front}_clean.fits')[0].data
+ccube_data = fits.open(f'{WORK_DIR}/GC_ccube_16yr{front}_clean.fits')[0].data
 for i in range(len(E_bounds)):
     c = ccube_data[i][100:500, 100:500]
     counts_per_exp[i]     = np.sum(disk_mask * (c / exp_cube[i])) / np.sum(disk_mask)
@@ -647,19 +571,19 @@ class Likelihood:
     def __init__(self, model, energy_bin):
         self.model       = model
         self.energy_bin  = energy_bin
-        self.data        = fits.open(f'{WORK_DIR}/GC_ccube_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.pion_bremss = (fits.open(f'{WORK_DIR}/GC_pion_model{model}_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-                          + fits.open(f'{WORK_DIR}/GC_bremss_model{model}_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500])
-        self.ics    = fits.open(f'{WORK_DIR}/GC_ics_model{model}_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.GCE    = fits.open(f'{WORK_DIR}/GC_GCE_model_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.bubble = fits.open(f'{WORK_DIR}/GC_fermi_bubble_model_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.iso    = fits.open(f'{WORK_DIR}/GC_isotropic_model_17yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.iso_no_convol    = fits.open(f'{WORK_DIR}/GC_isotropic_model_17yr{front}_clean_no_convol.fits')[0].data[energy_bin, 100:500, 100:500]
-        self.bubble_no_convol = fits.open(f'{WORK_DIR}/GC_fermi_bubble_model_17yr{front}_clean_no_convol.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.data        = fits.open(f'{WORK_DIR}/GC_ccube_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.pion_bremss = (fits.open(f'{WORK_DIR}/GC_pion_model{model}_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+                          + fits.open(f'{WORK_DIR}/GC_bremss_model{model}_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500])
+        self.ics    = fits.open(f'{WORK_DIR}/GC_ics_model{model}_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.GCE    = fits.open(f'{WORK_DIR}/GC_GCE_model_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.bubble = fits.open(f'{WORK_DIR}/GC_fermi_bubble_model_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.iso    = fits.open(f'{WORK_DIR}/GC_isotropic_model_16yr{front}_clean.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.iso_no_convol    = fits.open(f'{WORK_DIR}/GC_isotropic_model_16yr{front}_clean_no_convol.fits')[0].data[energy_bin, 100:500, 100:500]
+        self.bubble_no_convol = fits.open(f'{WORK_DIR}/GC_fermi_bubble_model_16yr{front}_clean_no_convol.fits')[0].data[energy_bin, 100:500, 100:500]
 
         self.E       = E
         self.delta_E = delta_E
-        self.exp_cube = (fits.open(f'{WORK_DIR}/GC_expcube_center_17yr{front}_clean.fits')[0].data[energy_bin]
+        self.exp_cube = (fits.open(f'{WORK_DIR}/GC_expcube_center_16yr{front}_clean.fits')[0].data[energy_bin]
                          * steradian_per_pixel)[100:500, 100:500]
 
         _psc_mask = psc_mask[energy_bin]
@@ -735,14 +659,6 @@ _LH = None  # populated per-bin by run_mcmc_for_bin BEFORE Pool fork
 def log_likelihood(params, energy_bin):
     # _LH is set in run_mcmc_for_bin before Pool fork; worker copies it
     # via copy-on-write and avoids re-opening fits files per walker eval.
-    if FIX_CGCE_ZERO:
-        # TS_GCE null hypothesis: clamp the GCE normalization (index 2 in the
-        # parameter order [c_gas, c_ics, c_GCE, c_bubble, c_iso] — see
-        # Likelihood.likelihood_constrained) to 0 so the likelihood describes
-        # a GCE-free model while the other four templates float. Copy first:
-        # emcee reuses the proposed walker array in place.
-        params = np.asarray(params, dtype=float).copy()
-        params[2] = 0.0
     return -(1.0 / 2.0) * _LH.likelihood_constrained(params)
 
 
@@ -779,8 +695,8 @@ def run_mcmc_for_bin(energy_bin):
         np.random.uniform(0, 10, [nwalkers]),
         np.random.uniform(0, 10, [nwalkers]),
     ]).T
-    # [v3.2] emcee Pool removed. 12yr lesson #10 (REF_12yr_final_code_for_17yr_SUMMARY.md):
-    # "Pool 시도하면 Fermi tools fork 이슈 가능". Confirmed in 17yr by Job 3
+    # [v3.2] emcee Pool removed. 12yr lesson #10 (REF_12yr_final_code_for_16yr_SUMMARY.md):
+    # "Pool 시도하면 Fermi tools fork 이슈 가능". Confirmed in 16yr by Job 3
     # (2026-05-14): single-worker PBS without launcher; gtsrcmaps + gtmodel
     # completed normally, then SIGKILL'd immediately after `[bin 0] start`
     # (the Pool fork point) with Pool workers showing BrokenPipe on IPC.
@@ -800,7 +716,7 @@ def run_mcmc_for_bin(energy_bin):
             _autocorr = sampler.get_autocorr_time(quiet=True, tol=0)
         except Exception:
             _autocorr = np.full(ndim, -1.0)
-        np.savez(f'./DIAG_chain_{model}{CGCE_SUFFIX}_bin{energy_bin:02d}.npz',
+        np.savez(f'./DIAG_chain_{model}_bin{energy_bin:02d}.npz',
                  flat_chain=_flat_chain,
                  acceptance_fraction=_acc_frac,
                  autocorr_time=_autocorr,
@@ -858,11 +774,11 @@ np.savetxt(
         fitted_params_upper[n*2:n*3] * GCE_arr * (E**2) / delta_E,
     ]).T
 )
-np.savetxt(f'./GCE_model_{model}{front}_17yr_cholis{CASE_SUFFIX}{VAR_SUFFIX}{CGCE_SUFFIX}_likelihood_value', max_likelihood)
+np.savetxt(f'./GCE_model_{model}{front}_16yr_cholis_likelihood_value', max_likelihood)
 
 # .npz — shape (5, n) for visualization-notebook compatibility
 np.savez(
-    f'./GCE_model_{model}{front}_17yr_cholis{CASE_SUFFIX}{VAR_SUFFIX}{CGCE_SUFFIX}_fit.npz',
+    f'./GCE_model_{model}{front}_16yr_cholis_fit.npz',
     fitted_params        = fitted_params.reshape(5, n),
     fitted_params_median = fitted_params_median.reshape(5, n),
     fitted_params_std    = fitted_params_std.reshape(5, n),
