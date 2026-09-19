@@ -34,7 +34,7 @@ the methodological reference is Cholis 2022 alone.
 ├── launch_all_rois.py                      <- 22-ROI cov MCMC launcher (RUNNER=wrapper)
 ├── make_gce_template.py                    <- MAIN GCE NFW² template builder (norm-bug fix, NEW 2026-05-19)
 ├── build_mapcubes.py                       <- raw GALPROP → fermitools MapCube reproducer (provenance, NEW 2026-05-23)
-├── make_perroi_ccube.py                    <- per-ROI ccube builder (cov notebook cell 6 정식화)
+├── make_perroi_ccube.py                    <- per-ROI ccube builder (formalises cov notebook cell 6)
 ├── make_wimp_map_per_roi.py                <- per-ROI wimp_map builder (NFW² translate)
 ├── build_cov_matrix.py                     <- cov matrix assembly
 ├── validate_cov_matrix.py                  <- cov matrix sanity checks
@@ -71,7 +71,7 @@ poisoning of downstream analysis.
 - `masking(significance, locations, energy, image_file, mask_scale=1.0)`
   — per-energy-bin circular point-source mask (`mask_scale=1.0` is paper-strict)
 - Coordinate transforms: `equatorial_to_galactic`, `galactic_to_equatorial`
-- 9 integrity-check helpers, all returning `(ok: bool, msg: str)`:
+- 10 integrity-check helpers, all returning `(ok: bool, msg: str)`:
   - `verify_fits(path)` — generic FITS sanity (opens + `verify('exception')`)
   - `verify_cube(path, expected_nebins=14, expected_xy=None)` — 3D FITS cube
   - `verify_event_file(path, min_events)` — gtselect / gtmktime output
@@ -81,6 +81,8 @@ poisoning of downstream analysis.
   - `verify_mask_npy(path, expected_shape)` — mask .npy
   - `verify_bin_def(path, expected_nebins=14)` — bin_definitions.fits
   - `verify_dat(path, expected_nbins=14)` — final per-model .dat (added in v3)
+  - `verify_srcmap(path)` — gtsrcmaps output: `verify_fits` plus the
+    NDSKEYS-header check that catches a partially written source map
 **Verifier contract**: `(ok, msg)`. Caller decides — `ok=True` → safe to skip
 rebuild; `ok=False` → abort with explicit message (no silent stale reuse).
  
@@ -225,50 +227,54 @@ python launch_all_models.py --no-cleanup           # rare, debug only
  
 ## Cov pipeline (2026-05-18 FINAL — phase-split wrapper)
  
-> 상세: `REF_cov_pipeline_17yr_FINAL.md`. 구
-> `REF_cov_subprocess_pipeline.md` (3-layer/tqdm 가설) 는 폐기됨.
- 
 ### `run_one_roi_cov.py` + `run_one_roi_cov_wrapper.py` + `launch_all_rois.py`
  
-Per-ROI cov MCMC. **SIGKILL fix 적용**: fermitools (gtsrcmaps/gtmodel)
-후 같은 프로세스 emcee 진입 시 외부 SIGKILL (12yr lesson #10 일반화,
-main Jobs 3-8 확정). Fix = (a) Pool 제거 → serial emcee, (b) prepare
-(fermitools) 와 mcmc 를 별도 subprocess 로 분리 (`run_one_roi_cov_wrapper.py`
-가 `RUN_PHASE=prepare/mcmc` env 로 2회 호출). `launch_all_rois.py`
-`RUNNER_SCRIPT='run_one_roi_cov_wrapper.py'`.
+Per-ROI cov MCMC, with the **SIGKILL fix applied**: entering emcee in the
+same process that has already run fermitools (gtsrcmaps / gtmodel) draws an
+external SIGKILL — the generalisation of 12yr lesson #10, confirmed by main
+Jobs 3-8. Fix = (a) Pool removed, so emcee runs serially; (b) prepare
+(fermitools) and mcmc split into separate subprocesses, with
+`run_one_roi_cov_wrapper.py` calling twice under `RUN_PHASE=prepare/mcmc`.
+`launch_all_rois.py` sets `RUNNER_SCRIPT='run_one_roi_cov_wrapper.py'`.
  
-**메모리 (17yr 실측, 2026-05-18 단위검증)**: cov gtsrcmaps RSS
-**~1.5 GB/ROI** (peak sum_rss 1.5GB, max_proc 1.4GB). 기존 "30-50GB"
-는 16yr/타 조건 추정치로 17yr 과 불일치. load 1.04 = ROI당 ~1코어.
-→ `--workers 8` 안전 (메모리·CPU 제약 배제). per-ROI ~87분
-(prepare 24 + mcmc 63). 출력 `results_cov_17yr/`.
+**Memory (17yr, measured in the 2026-05-18 unit check)**: cov gtsrcmaps RSS
+is **~1.5 GB/ROI** (peak sum_rss 1.5 GB, max_proc 1.4 GB). The earlier
+"30-50 GB" figure was an estimate for 16yr and other conditions and does not
+hold for 17yr. load 1.04 = ~1 core per ROI, so `--workers 8` is safe —
+neither memory nor CPU binds. Per-ROI runtime ~87 min (prepare 24 + mcmc 63).
+Output in `results_cov_17yr/`.
  
-Prerequisites: `prepare_one_roi_cov.py` 산출 + `make_perroi_ccube.py`
-(per-ROI ccube 22) + `make_wimp_map_per_roi.py` (wimp_map 22).
+Prerequisites: the output of `prepare_one_roi_cov.py`, plus
+`make_perroi_ccube.py` (22 per-ROI ccubes) and `make_wimp_map_per_roi.py`
+(22 wimp_maps).
  
 ### `launcher_watchdog_cov.sh`
  
-`launcher_watchdog.sh` 에서 CONFIG+glob 만 cov 용 치환 (로직 동일,
-main 14회 자동복구 검증 승계). launcher silent death (시작 ~2시간 후,
-원인 미상·OOM 아님) 시 60s polling 으로 orphan 회수 + 재시작,
-22/22 도달 시 자동 종료. 본실행 2026-05-18 에서 1회 사망·무손실 복구.
+`launcher_watchdog.sh` with only CONFIG and the glob swapped for the cov run.
+The logic is identical and inherits the 14-restart recovery record verified on
+the main run. On launcher silent death (~2 h after start, cause unknown, not
+OOM) it reclaims orphans and restarts on 60 s polling, and exits automatically
+at 22/22. The production run on 2026-05-18 died once and recovered with no
+data loss.
  
-### `make_perroi_ccube.py` — per-ROI ccube (cov notebook cell 6 정식화)
+### `make_perroi_ccube.py` — per-ROI ccube (formalises cov notebook cell 6)
  
-cov 노트북에 per-ROI ccube 생성 cell 부재 (cell 0 markdown 만 언급).
-기존 20개는 미첨부 코드로 생성·±20 누락 상태였음. 이 스크립트가
-누락 cell 6 을 정식화: gtbin 파라미터를 기존 `l-25` 헤더에서 byte
-역추출 (CCUBE, 600×600, binsz 0.1, GAL/CAR, **xref=roi**, yref=0,
-ebinfile=bin_definitions.fits, 14 bins). idempotent. 음수 ROI 는
-`--rois=-20,20` 등호 형식 필수 (argparse 옵션 오인 회피).
+The cov notebook has no cell that builds the per-ROI ccubes — cell 0's
+markdown only mentions them. The 20 that existed had been produced by code
+that was never attached, and ±20 were missing. This script formalises the
+absent cell 6: the gtbin parameters are recovered byte-wise from the header of
+the existing `l-25` output (CCUBE, 600×600, binsz 0.1, GAL/CAR, **xref=roi**,
+yref=0, ebinfile=bin_definitions.fits, 14 bins). Idempotent. Negative ROIs
+need the `--rois=-20,20` equals form, so argparse does not read them as
+options.
  
 ### `make_wimp_map_per_roi.py` — wimp_map per ROI (NFW² translate)
  
-ROI별 NFW² LOS 재적분 (translate) — Cholis 2022 L1477 "GCE is the
-only template translated". 정규화 합=1.0000 검증. (cov 노트북
-cell 9 의 16yr "header 재해석" 방식 아님 — 그 방식은 Cholis 와
-불일치, `REF_GCE_covariance_16yr_SUMMARY.md` 🔴 정정 블록 참조.)
-fermitools 無 → SIGKILL 위험 0.
+Per-ROI NFW² LOS re-integration (translate) — Cholis 2022 L1477, "GCE is the
+only template translated". Normalisation verified to sum to 1.0000. This is
+not the 16yr "header reinterpretation" approach used in the cov notebook's
+cell 9; that approach disagrees with Cholis. No fermitools call, so no SIGKILL
+exposure.
  
 ### `make_gce_template.py` — MAIN GCE spatial template (NEW 2026-05-19)
  
@@ -420,10 +426,10 @@ formula, "Spatial: raw orientation preserved (no flip)".
  
 ### `build_cov_matrix.py` + `validate_cov_matrix.py`
  
-22 ROI fit.npz → 14×14 systematic cov. 순수 numpy. docstring
-`(20,)→(22,)` 정정 완료 (2026-05-18). 검증 (2026-05-18): cond
-2.35e5, sigma_sys peak 1.25e-6 @0.31GeV → 1.49e-7 @35GeV (Calore+
-1409.0042 패턴 일치), symmetric, diag≥0.
+22 ROI fit.npz → 14×14 systematic cov. Pure numpy. The docstring was
+corrected from `(20,)` to `(22,)` on 2026-05-18. Verified the same day: cond
+2.35e5, sigma_sys peak 1.25e-6 @0.31 GeV falling to 1.49e-7 @35 GeV (matching
+the pattern in Calore et al. 1409.0042), symmetric, diag ≥ 0.
  
 ---
  
@@ -436,7 +442,7 @@ formula, "Spatial: raw orientation preserved (no flip)".
 (GALPROP / fits mmap) in the Python process; entering emcee MCMC over
 it — whether via Pool fork or same-process — triggers external SIGKILL.**
 This is the generalization of 12yr lesson #10. Earlier "VS Code tqdm
-PTY overflow" hypothesis (`REF_cov_subprocess_pipeline.md`) was wrong.
+PTY overflow" hypothesis was wrong.
  
 Evidence (main pipeline Jobs 3-8, 2026-05-14/15):
  
@@ -560,7 +566,7 @@ nohup ./launcher_watchdog.sh > watchdog_console.log 2>&1 &
 disown
  
 # (4) Per-ROI ccube + wimp_map (cov prerequisites)
-python make_perroi_ccube.py                          # 22 per-ROI ccube (누락만)
+python make_perroi_ccube.py                          # 22 per-ROI ccube (missing only)
 python make_wimp_map_per_roi.py --workers 8          # 22 wimp_map (NFW² translate)
  
 # (5) Cov MCMC — 22 ROIs, phase-split wrapper + watchdog

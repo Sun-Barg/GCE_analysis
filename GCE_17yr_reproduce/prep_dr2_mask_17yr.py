@@ -3,7 +3,7 @@
 prep_dr2_mask_17yr.py — 17.5yr 데이터에 4FGL-DR2 PSC mask 적용 준비+검증
 (catalog-update systematic study, Stage A).
 
-근거(이 세션 코드 확인):
+근거(코드 확인):
   - MAIN fit에서 PSC는 mask(.npy)로만 들어감. component map은 PSC-free
     6-template XML 산물이라 catalog 무관 → 재사용.
   - mask는 Cholis Table III radius + catalog 위치/유의도 + 공유 grid에만

@@ -22,14 +22,22 @@ emcee==3.1.6
 # in README.md. Not redistributed in this repository.
 LATSourceModel==1.10.11
 
-# Posterior inspection and diagnostics used by the analysis notebooks
-corner==2.2.3
-dynesty==3.0.0
+# Posterior inspection and diagnostics used by the analysis notebooks.
+# chainconsumer is deliberately left unpinned: one 12 yr notebook asks for
+# 0.34.0 because the add_chain() signature changed in later releases.
 chainconsumer
 iminuit
 psutil
+pyyaml
+dynesty==3.0.0        # imported only by the gcepy cross-check notebook
+
+# Reads HepMC event records for Prompt_spectra/prompt_generation.py. That file
+# belongs to the companion MadGraph5 + Pythia8 prompt-spectra pipeline and is
+# not on the Fermi-LAT analysis path; skip it if you only run the fit.
+pyhepmc
 
 # Optional — only for the gcepy cross-check notebook
 # (gcepy itself is not on PyPI: clone https://github.com/samueldmcdermott/gcepy
 #  and `python -m pip install .`)
 # jax
+# numpyro

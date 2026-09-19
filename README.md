@@ -43,7 +43,7 @@ reported in `README_pipeline.md`.
 
 **Stale-file protection.** A mid-run kill could once leave partial
 intermediates that the next launcher pass silently reused. The pipeline now
-ships **9 integrity verifiers** on an `(ok, msg)` contract, atomic
+ships **10 integrity verifiers** on an `(ok, msg)` contract, atomic
 `.tmp + os.rename` writes, and an explicit fail-on-stale policy — never
 silent reuse. Unattended runs are held up by `launcher_watchdog*.sh`
 (60 s polling, orphan reclamation, restart, auto-exit at target count):
@@ -102,8 +102,9 @@ companion MadGraph5 + Pythia8 pipeline (see *Related repositories*).
 
 [Fermitools](https://github.com/fermi-lat/Fermitools-conda) supplies
 `gtselect`, `gtmktime`, `gtbin`, `gtltcube`, `gtexpcube2`, `gtsrcmaps` and
-`gtmodel`. It is conda-only and is therefore not covered by
-`requirements.txt`:
+`gtmodel`, together with the Python modules the pipeline imports directly —
+`GtApp`, `gt_apps`, `BinnedAnalysis`, `UnbinnedAnalysis` and `pyLikelihood`.
+It is conda-only and is therefore not covered by `requirements.txt`:
 
 ```bash
 conda create -n fermi -c conda-forge -c fermi fermitools
@@ -143,9 +144,10 @@ methodological reference for the 17.5 yr analysis is Cholis et al. 2022.
 
 ## Related repositories
 
-- **Prompt spectra pipeline** — MadGraph5 + Pythia8 mass-scan orchestration,
-  spectrum extraction, interpolation, and validation against PPPC4DMID.
-  `dm_spectra_pipeline`, released together with the manuscript.
+- **`dm_spectra_pipeline`** — MadGraph5 + Pythia8 mass-scan orchestration,
+  spectrum extraction, interpolation, and validation against PPPC4DMID. It
+  produces the prompt spectra this analysis consumes. Released together with
+  the manuscript.
 
 ---
 
@@ -155,11 +157,11 @@ This repository contains only code written for this analysis. Work by others
 is declared as a dependency or cited, not redistributed here. Each item below
 must be obtained from its own source.
 
-| Component | Author | Terms | How to obtain |
+| Component | Author / reference | Terms | How to obtain |
 |---|---|---|---|
 | `LATSourceModel` — `SourceList` / `make4FGLxml`, builds the point-source XML model from the catalog | Tyrel Johnson. Originally distributed as a single file through the Fermi SSC user contributions, later restructured into a package | GPL-3.0 | `pip install LATSourceModel` · [source](https://github.com/physicsranger/make4FGLxml) |
-| Cascade spectrum tables and loader examples | Elor, Rodd, Slatyer & Xue, [arXiv:1511.08787](https://arxiv.org/abs/1511.08787) | cite the paper | supplementary material of the paper |
-| Masks for GCE analysis | Zhong & Cholis, [arXiv:2401.02481](https://arxiv.org/abs/2401.02481) | acknowledge the paper | as directed by the authors |
+| Cascade spectrum tables and loader examples | Elor, Rodd, Slatyer & Xue, [arXiv:1511.08787](https://arxiv.org/abs/1511.08787) | cite the paper | [CascadeSpectra](http://web.mit.edu/lns/research/CascadeSpectra.html), released by the authors |
+| Masks for GCE analysis | Zhong & Cholis, [arXiv:2401.02481](https://arxiv.org/abs/2401.02481) | acknowledge the paper | [ymzhong/gce_mask](https://github.com/ymzhong/gce_mask) |
 | Binned-likelihood and Python likelihood tutorials | Fermi SSC | — | [fermi-lat/AnalysisThreads](https://github.com/fermi-lat/AnalysisThreads) |
 
 ### How the table was built
@@ -253,7 +255,7 @@ repository; their own terms apply wherever they are used, as listed under
 - Cholis, Zhong, McDermott, Surdutovich 2022 — [arXiv:2112.09706](https://arxiv.org/abs/2112.09706) *(primary methodology)*
 - LAT 16-Year Source List — [arXiv:2602.22148](https://arxiv.org/abs/2602.22148)
 - Calore, Cholis, Weniger 2015 — [arXiv:1409.0042](https://arxiv.org/abs/1409.0042) *(systematic covariance)*
-- Goodenough & Hooper 2009 — GCE discovery
+- Goodenough & Hooper 2009 — [arXiv:0910.2998](https://arxiv.org/abs/0910.2998) *(GCE discovery)*
 
 ---
 

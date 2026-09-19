@@ -6,7 +6,15 @@
 #   아니라 보간된 스펙트럼 위에서 계산되도록 하여, 전역 best fit이 소수 r에
 #   앉을 수 있게 함 (작성자 제안 2026-07-10).
 #
-#   설계 (세션 합의):
+#   Companion copy. The same script is tracked in the companion repository
+#   dm_spectra_pipeline as interp/interp_offshell_spectra.py, which is where
+#   it belongs and is normally run from: it reads the MadGraph5 spectrum
+#   directories, not any Fermi-LAT product, and nothing else in this
+#   repository imports or calls it. It is kept here so that the provenance
+#   of the interpolated spectra this analysis consumes stays visible.
+#   Edit the two copies together.
+#
+#   설계:
 #   · 보간량 = dN/dx (x = E/m_χ), 공통 x-빈 위 고정-x 선형 보간.
 #     ① 브래킷 폴더 안 질량 정렬(raw x-빈 위 질량 선형) → ② r 선형.
 #     로그공간 보간은 --yspace log 비교 옵션(제로빈 때문에 기본은 linear).

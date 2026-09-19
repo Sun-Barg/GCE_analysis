@@ -731,7 +731,7 @@ def run_mcmc_for_bin(energy_bin):
         np.random.uniform(0, 10, [nwalkers]),
         np.random.uniform(0, 10, [nwalkers]),
     ]).T
-    # [v3.2] emcee Pool removed. 12yr lesson #10 (REF_12yr_final_code_for_12yr_SUMMARY.md):
+    # [v3.2] emcee Pool removed. 12yr lesson #10:
     # "Pool 시도하면 Fermi tools fork 이슈 가능". Confirmed in 17yr by Job 3
     # (2026-05-14): single-worker PBS without launcher; gtsrcmaps + gtmodel
     # completed normally, then SIGKILL'd immediately after `[bin 0] start`

@@ -368,8 +368,6 @@ def verify_srcmap(path):
     Without this guard the next launch's skip-check would treat the
     partial file as healthy, and gtmodel would later fail with
     `Cannot read keyword "NDSKEYS"`.
-
-    Ref: REF_12yr_final_code_for_17yr_SUMMARY.md, Fix 5.
     """
     ok, msg = verify_fits(path)
     if not ok:
